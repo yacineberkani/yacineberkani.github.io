@@ -468,29 +468,15 @@
     const cursorFollower = document.getElementById('cursor-follower');
 
     if (cursor && cursorFollower && window.matchMedia('(min-width: 1025px)').matches) {
-        let mouseX = 0, mouseY = 0;
-        let followerX = 0, followerY = 0;
+       
 
         document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
+          
 
-            cursor.style.left = mouseX + 'px';
-            cursor.style.top = mouseY + 'px';
+         
         });
 
-        function animateFollower() {
-            const dx = mouseX - followerX;
-            const dy = mouseY - followerY;
-
-            followerX += dx * 0.15;
-            followerY += dy * 0.15;
-
-            cursorFollower.style.left = followerX + 'px';
-            cursorFollower.style.top = followerY + 'px';
-
-            requestAnimationFrame(animateFollower);
-        }
+       
         animateFollower();
 
         // Hover effect sur les éléments interactifs
