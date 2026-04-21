@@ -461,48 +461,6 @@
         formStatus.style.display = 'block';
     }
 
-    // =====================================================================
-    // 14. CUSTOM CURSOR (desktop uniquement)
-    // =====================================================================
-    const cursor = document.getElementById('cursor');
-    const cursorFollower = document.getElementById('cursor-follower');
-
-    if (cursor && cursorFollower && window.matchMedia('(min-width: 1025px)').matches) {
-     
-        let followerX = 0, followerY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-        
-
-        
-        });
-
-        function animateFollower() {
-          
-
-            followerX += dx * 0.15;
-            followerY += dy * 0.15;
-
-            cursorFollower.style.left = followerX + 'px';
-            cursorFollower.style.top = followerY + 'px';
-
-            requestAnimationFrame(animateFollower);
-        }
-        animateFollower();
-
-        // Hover effect sur les éléments interactifs
-        const hoverables = document.querySelectorAll('a, button, .skill-category, .project-card, .stat-card');
-        hoverables.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursorFollower.style.transform = 'scale(1.5)';
-                cursorFollower.style.backgroundColor = 'rgba(99, 102, 241, 0.2)';
-            });
-            el.addEventListener('mouseleave', () => {
-                cursorFollower.style.transform = 'scale(1)';
-                cursorFollower.style.backgroundColor = 'transparent';
-            });
-        });
-    }
 
     // =====================================================================
     // 15. SMOOTH SCROLL POUR LES ANCRES
