@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio de Yacine Berkani - ML Engineer spécialisé en MLOps, LLM, RAG et GCP">
+    <meta name="author" content="Yacine Berkani">
+    <title>Yacine Berkani | ML Engineer</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- AOS Animations -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="loader">
+            <div class="loader-circle"></div>
+            <div class="loader-text">YB</div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursor-follower"></div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <span class="logo-bracket">&lt;</span>
+                <span class="logo-text">YB</span>
+                <span class="logo-bracket">/&gt;</span>
+            </a>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active">Accueil</a></li>
+                <li><a href="#about" class="nav-link">À propos</a></li>
+                <li><a href="#skills" class="nav-link">Compétences</a></li>
+                <li><a href="#experience" class="nav-link">Expérience</a></li>
+                <li><a href="#projects" class="nav-link">Projets</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg">
+            <div class="hero-gradient"></div>
+            <div class="hero-grid"></div>
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+            </div>
+        </div>
+
+        <div class="container hero-container">
+            <div class="hero-content" data-aos="fade-right" data-aos-duration="1000">
+                <div class="hero-greeting">
+                    <span class="greeting-dot"></span>
+                    <span>Disponible pour de nouvelles opportunités</span>
+                </div>
+
+                <h1 class="hero-title">
+                    Bonjour, je suis<br>
+                    <span class="hero-name">Yacine Berkani</span>
+                </h1>
+
+                <h2 class="hero-subtitle">
+                    <span class="typed-text" id="typedText"></span><span class="cursor-typed">|</span>
+                </h2>
+
+                <p class="hero-description">
+                    Ingénieur Machine Learning avec <strong>5 ans d'expérience</strong> dans la conception et l'industrialisation
+                    de solutions IA en production. Spécialisé en <strong>LLM, RAG, MLOps</strong> et architectures
+                    cloud <strong>GCP</strong>. Je transforme des modèles en services robustes, scalables et réellement utilisés.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">
+                        <span>Voir mes projets</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <span>Me contacter</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </a>
+                </div>
+
+                <div class="hero-social">
+                    <a href="https://github.com/yacineberkani" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/yacine-berkani-a66189244/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="mailto:yacineberkani32@gmail.com" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-visual" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                <div class="profile-container">
+                    <div class="profile-ring ring-1"></div>
+                    <div class="profile-ring ring-2"></div>
+                    <div class="profile-image">
+                        <img src="assets/images/profile.jpg" alt="Yacine Berkani - ML Engineer" />
+                    </div>
+                    <div class="profile-badge badge-ml">
+                        <i class="fas fa-brain"></i>
+                        <span>ML</span>
+                    </div>
+                    <div class="profile-badge badge-cloud">
+                        <i class="fas fa-cloud"></i>
+                        <span>GCP</span>
+                    </div>
+                    <div class="profile-badge badge-code">
+                        <i class="fas fa-code"></i>
+                        <span>Python</span>
+                    </div>
+                    <div class="profile-badge badge-ai">
+                        <i class="fas fa-robot"></i>
+                        <span>LLM</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#about" class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">01 — À propos</span>
+                <h2 class="section-title">Qui suis-je&nbsp;?</h2>
+                <p class="section-subtitle">Passionné par l'industrialisation de l'IA</p>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-text" data-aos="fade-right">
+                    <p class="about-paragraph">
+                        Je travaille sur des sujets de <span class="highlight">machine learning en production</span>,
+                        avec une vraie appétence pour tout ce qui touche à l'industrialisation et à la scalabilité.
+                    </p>
+                    <p class="about-paragraph">
+                        Chez <strong>Assystem</strong>, j'ai conçu une solution complète sur <span class="highlight">GCP</span>
+                        pour automatiser l'analyse de documents techniques, en allant du pipeline de données jusqu'à
+                        l'exposition via API, avec des contraintes fortes de performance et de fiabilité.
+                    </p>
+                    <p class="about-paragraph">
+                        J'ai notamment travaillé sur des architectures basées sur des <span class="highlight">LLM et du RAG</span>,
+                        avec du fine-tuning (QLoRA) et de l'A/B testing en production. Ce que j'aime dans mon métier,
+                        c'est transformer des modèles en services réellement utilisés, <span class="highlight">robustes et monitorés</span>.
+                    </p>
+                    <p class="about-paragraph">
+                        J'interviens aussi bien sur la partie <strong>data</strong>, <strong>ML</strong>
+                        que sur <strong>l'infrastructure</strong>, avec une forte sensibilité MLOps.
+                    </p>
+
+                    <div class="about-info">
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <span class="info-label">Localisation</span>
+                                <span class="info-value">France</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <div>
+                                <span class="info-label">Formation</span>
+                                <span class="info-value">Master Big Data - Paris 8</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-briefcase"></i>
+                            <div>
+                                <span class="info-label">Expérience</span>
+                                <span class="info-value">5 ans en ML/Data</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-language"></i>
+                            <div>
+                                <span class="info-label">Langues</span>
+                                <span class="info-value">FR, EN, Kabyle</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-stats" data-aos="fade-left">
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="5">0</div>
+                        <div class="stat-plus">+</div>
+                        <div class="stat-label">Années d'expérience</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="24">0</div>
+                        <div class="stat-plus">+</div>
+                        <div class="stat-label">Projets GitHub</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="15">0</div>
+                        <div class="stat-plus">+</div>
+                        <div class="stat-label">Technologies maîtrisées</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="95">0</div>
+                        <div class="stat-plus">%</div>
+                        <div class="stat-label">Taux de détection projet IA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section skills">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">02 — Compétences</span>
+                <h2 class="section-title">Stack Technique</h2>
+                <p class="section-subtitle">Les technologies que j'utilise au quotidien</p>
+            </div>
+
+            <div class="skills-grid">
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
+                    <div class="skill-icon"><i class="fas fa-brain"></i></div>
+                    <h3>Machine Learning & IA</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">Scikit-learn</span>
+                        <span class="skill-tag">Keras</span>
+                        <span class="skill-tag">Deep Learning</span>
+                        <span class="skill-tag">NLP</span>
+                        <span class="skill-tag">Computer Vision</span>
+                    </div>
+                </div>
+
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
+                    <div class="skill-icon"><i class="fas fa-robot"></i></div>
+                    <h3>LLM & Generative AI</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">ChatGPT</span>
+                        <span class="skill-tag">Gemini</span>
+                        <span class="skill-tag">Gemma</span>
+                        <span class="skill-tag">Mistral</span>
+                        <span class="skill-tag">LLaMA-3</span>
+                        <span class="skill-tag">RAG</span>
+                        <span class="skill-tag">QLoRA</span>
+                        <span class="skill-tag">Prompt Engineering</span>
+                    </div>
+                </div>
+
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
+                    <div class="skill-icon"><i class="fas fa-cogs"></i></div>
+                    <h3>MLOps & DevOps</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Airflow</span>
+                        <span class="skill-tag">Vertex AI</span>
+                        <span class="skill-tag">Cloud Run</span>
+                        <span class="skill-tag">Terraform</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">CI/CD</span>
+                        <span class="skill-tag">GitLab</span>
+                    </div>
+                </div>
+
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="400">
+                    <div class="skill-icon"><i class="fas fa-cloud"></i></div>
+                    <h3>Cloud & Infrastructure</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">GCP <small>(Expert)</small></span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">BigQuery</span>
+                        <span class="skill-tag">Dataproc</span>
+                        <span class="skill-tag">Hadoop</span>
+                        <span class="skill-tag">Spark</span>
+                    </div>
+                </div>
+
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="500">
+                    <div class="skill-icon"><i class="fas fa-code"></i></div>
+                    <h3>Langages</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python <small>(Expert)</small></span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">R</span>
+                        <span class="skill-tag">Scala</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">Shell</span>
+                        <span class="skill-tag">VBA</span>
+                    </div>
+                </div>
+
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="600">
+                    <div class="skill-icon"><i class="fas fa-database"></i></div>
+                    <h3>Bases de données</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">BigQuery</span>
+                        <span class="skill-tag">Redis</span>
+                        <span class="skill-tag">Pinecone</span>
+                        <span class="skill-tag">ChromaDB</span>
+                        <span class="skill-tag">Qdrant</span>
+                        <span class="skill-tag">MySQL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section experience">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">03 — Parcours</span>
+                <h2 class="section-title">Expérience professionnelle</h2>
+                <p class="section-subtitle">Mon parcours de data à ML Engineer</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-up">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Oct 2024 — Fév 2026</div>
+                        <h3 class="timeline-title">ML Engineer</h3>
+                        <h4 class="timeline-company">Assystem EOS</h4>
+                        <p class="timeline-description">
+                            Conception d'une solution complète sur <strong>GCP</strong> pour automatiser l'analyse
+                            de documents techniques. Mise en place de pipelines <strong>Airflow</strong>, architecture
+                            <strong>RAG avec FastAPI sur Cloud Run</strong>, et fine-tuning de <strong>Gemma 3 4B via QLoRA</strong>.
+                        </p>
+                        <div class="timeline-results">
+                            <span class="result-chip"><i class="fas fa-rocket"></i> -60% temps d'analyse</span>
+                            <span class="result-chip"><i class="fas fa-bullseye"></i> 95,2% de détection</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-up">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Juil 2023 — Sept 2024</div>
+                        <h3 class="timeline-title">ML Engineer</h3>
+                        <h4 class="timeline-company">Laboratoire Paragraphe — Paris 8</h4>
+                        <p class="timeline-description">
+                            Développement d'un moteur de recommandation de contenu scientifique.
+                            Utilisation de <strong>RAG, LLaMA-3, BERTopic</strong> et similarité cosinus pour
+                            optimiser la pertinence des recommandations.
+                        </p>
+                        <div class="timeline-results">
+                            <span class="result-chip"><i class="fas fa-bolt"></i> -70% temps de traitement</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-up">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Oct 2022 — Juin 2023</div>
+                        <h3 class="timeline-title">ML Engineer</h3>
+                        <h4 class="timeline-company">Laboratoire Paragraphe — Paris 8</h4>
+                        <p class="timeline-description">
+                            Projet de <strong>Computer Vision</strong> pour la détection de tumeurs cérébrales à
+                            partir d'IRM. Modèle <strong>VGG16 (CNN)</strong> sous TensorFlow/Keras.
+                        </p>
+                        <div class="timeline-results">
+                            <span class="result-chip"><i class="fas fa-check-circle"></i> 91% d'accuracy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-up">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Oct 2019 — Juil 2020</div>
+                        <h3 class="timeline-title">Data Engineer</h3>
+                        <h4 class="timeline-company">ENIE</h4>
+                        <p class="timeline-description">
+                            Mise en place d'une plateforme Big Data sur <strong>GCP</strong> avec
+                            <strong>Hadoop/Spark (Dataproc)</strong> et <strong>BigQuery</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-up">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Mars 2019 — Sept 2019</div>
+                        <h3 class="timeline-title">Data Analyst</h3>
+                        <h4 class="timeline-company">IRIS</h4>
+                        <p class="timeline-description">
+                            Préparation de données <strong>ETL/ELT</strong> et création de tableaux de bord
+                            <strong>Power BI</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div class="section-header" style="margin-top: 5rem;" data-aos="fade-up">
+                <h3 class="section-title" style="font-size: 2rem;">Formation</h3>
+            </div>
+
+            <div class="education-grid">
+                <div class="education-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="education-year">2022</div>
+                    <h4>Master Informatique — Big Data</h4>
+                    <p>Université Paris 8</p>
+                </div>
+                <div class="education-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="education-year">2019</div>
+                    <h4>Master 1 Recherche Opérationnelle</h4>
+                    <p>UMMTO</p>
+                </div>
+                <div class="education-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="education-year">2018</div>
+                    <h4>Licence Mathématiques & Informatique</h4>
+                    <p>UMMTO</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section projects">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">04 — Portfolio</span>
+                <h2 class="section-title">Projets récents</h2>
+                <p class="section-subtitle">Une sélection de mes projets GitHub</p>
+            </div>
+
+            <div class="project-filters" data-aos="fade-up">
+                <button class="filter-btn active" data-filter="all">Tous</button>
+                <button class="filter-btn" data-filter="ml">Machine Learning</button>
+                <button class="filter-btn" data-filter="llm">LLM / RAG</button>
+                <button class="filter-btn" data-filter="data">Data Engineering</button>
+                <button class="filter-btn" data-filter="web">Web</button>
+            </div>
+
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Projects will be rendered by JS -->
+            </div>
+
+            <div class="projects-cta" data-aos="fade-up">
+                <a href="https://github.com/yacineberkani" target="_blank" rel="noopener" class="btn btn-primary">
+                    <i class="fab fa-github"></i>
+                    <span>Voir tous mes projets sur GitHub</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">05 — Contact</span>
+                <h2 class="section-title">Travaillons ensemble</h2>
+                <p class="section-subtitle">Toujours ouvert à de nouvelles opportunités et collaborations</p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-info" data-aos="fade-right">
+                    <h3>Discutons de votre projet</h3>
+                    <p>
+                        Vous avez un projet ML en tête, une idée à industrialiser, ou simplement envie d'échanger
+                        sur l'IA&nbsp;? N'hésitez pas à me contacter, je réponds rapidement&nbsp;!
+                    </p>
+
+                    <div class="contact-methods">
+                        <a href="mailto:yacineberkani32@gmail.com" class="contact-method">
+                            <div class="method-icon"><i class="fas fa-envelope"></i></div>
+                            <div>
+                                <span class="method-label">Email</span>
+                                <span class="method-value">yacineberkani32@gmail.com</span>
+                            </div>
+                        </a>
+
+                        <a href="https://www.linkedin.com/in/yacine-berkani-a66189244/" target="_blank" rel="noopener" class="contact-method">
+                            <div class="method-icon"><i class="fab fa-linkedin-in"></i></div>
+                            <div>
+                                <span class="method-label">LinkedIn</span>
+                                <span class="method-value">yacine-berkani</span>
+                            </div>
+                        </a>
+
+                        <a href="https://github.com/yacineberkani" target="_blank" rel="noopener" class="contact-method">
+                            <div class="method-icon"><i class="fab fa-github"></i></div>
+                            <div>
+                                <span class="method-label">GitHub</span>
+                                <span class="method-value">@yacineberkani</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <form class="contact-form" id="contactForm" data-aos="fade-left">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" required>
+                        <label for="name">Votre nom</label>
+                        <span class="form-line"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" required>
+                        <label for="email">Votre email</label>
+                        <span class="form-line"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="subject" name="subject" required>
+                        <label for="subject">Sujet</label>
+                        <span class="form-line"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                        <label for="message">Votre message</label>
+                        <span class="form-line"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span>Envoyer le message</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+
+                    <div class="form-status" id="formStatus"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#home" class="nav-logo">
+                        <span class="logo-bracket">&lt;</span>
+                        <span class="logo-text">YB</span>
+                        <span class="logo-bracket">/&gt;</span>
+                    </a>
+                    <p>ML Engineer — Transformer les modèles en services robustes et scalables.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="#home">Accueil</a></li>
+                        <li><a href="#about">À propos</a></li>
+                        <li><a href="#skills">Compétences</a></li>
+                        <li><a href="#projects">Projets</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-social">
+                    <h4>Me suivre</h4>
+                    <div class="social-links">
+                        <a href="https://github.com/yacineberkani" target="_blank" rel="noopener" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/yacine-berkani-a66189244/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="mailto:yacineberkani32@gmail.com" aria-label="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© <span id="currentYear"></span> Yacine Berkani. Tous droits réservés.</p>
+                <p>Conçu avec <i class="fas fa-heart" style="color:#ff4d6d"></i> et beaucoup de <i class="fas fa-coffee"></i></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top -->
+    <button class="back-to-top" id="backToTop" aria-label="Retour en haut">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
