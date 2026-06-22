@@ -395,16 +395,6 @@
             tags: ['Web', 'Auth', 'Backend'],
             date: 'Mai 2024',
             link: 'https://github.com/yacineberkani/Formulaire_de_Connexion'
-        },
-        {
-            title: 'Mon CV',
-            description: "Page web personnelle présentant mon parcours professionnel et mes réalisations.",
-            category: 'web',
-            categoryLabel: 'Personal Site',
-            icon: 'fa-id-card',
-            tags: ['HTML', 'CSS', 'Portfolio'],
-            date: 'Avril 2026',
-            link: 'https://github.com/yacineberkani/MonCV'
         }
     ];
 
