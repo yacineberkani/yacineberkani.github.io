@@ -265,7 +265,7 @@
             title: 'CV Evaluator',
             description: 'Évaluateur automatique de CV propulsé par LLM — analyse, scoring et recommandations personnalisées pour optimiser les candidatures et aider les recruteurs.',
             category: 'llm',
-            categoryLabel: 'LLM / NLP',
+            categoryLabel: 'AI Agent (multi-agent)',
             icon: 'fa-file-pen',
             tags: ['Python', 'LLM', 'NLP', 'Streamlit', 'RAG'],
             date: 'Juin 2026',
