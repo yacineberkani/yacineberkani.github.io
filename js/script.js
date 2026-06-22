@@ -247,8 +247,6 @@
             tags: ['Python', 'GCP', 'BigQuery', 'Gemini', 'FinOps', 'React'],
             date: 'Juin 2026',
             videoUrl: 'https://github.com/user-attachments/assets/de3229a1-7509-4896-b849-e8b04221a4a1',
-            featured: true,
-            vitrine: true,
             poc: true
         },
         {
@@ -260,9 +258,7 @@
             tags: ['Python', 'LLM', 'AI Agent', 'API', 'Streamlit'],
             date: 'Juin 2026',
             link: 'https://github.com/yacineberkani/Flight-Search-Agent',
-            videoUrl: 'https://github.com/user-attachments/assets/d5561a82-e9de-412d-a601-ed4e1be758f7',
-            featured: true,
-            vitrine: true
+            videoUrl: 'https://github.com/user-attachments/assets/d5561a82-e9de-412d-a601-ed4e1be758f7'
         },
         {
             title: 'Fatigue Driving Detection',
@@ -273,6 +269,7 @@
             tags: ['Python', 'OpenCV', 'Deep Learning', 'Real-time', 'dlib'],
             date: 'Juin 2026',
             link: 'https://github.com/yacineberkani/yacineberkani-Fatigue-Driving-Detection',
+            videoUrl: 'https://github.com/user-attachments/assets/edcd9028-eadc-4004-b90f-4306def56f04'
         },
         {
             title: 'CV Evaluator',
@@ -283,9 +280,7 @@
             tags: ['Python', 'LLM', 'NLP', 'Streamlit', 'RAG'],
             date: 'Juin 2026',
             link: 'https://github.com/yacineberkani/cv_evaluator',
-            videoUrl: 'https://github.com/user-attachments/assets/45300066-c809-473d-ba67-3bd57212b555',
-            featured: true,
-            vitrine: true
+            videoUrl: 'https://github.com/user-attachments/assets/45300066-c809-473d-ba67-3bd57212b555'
         },
         {
             title: 'RAG Multi-Documents',
@@ -418,37 +413,6 @@
     const projectsGrid = document.getElementById('projectsGrid');
 
     function createProjectCard(project, idx) {
-        if (project.vitrine && project.videoUrl) {
-            return `
-                <article class="project-card vitrine" data-category="${project.category}" style="animation-delay: ${idx * 0.08}s">
-                    <div class="vitrine-badge"><i class="fas fa-star"></i> Vitrine</div>
-                    <div class="project-video-wrapper">
-                        <video controls preload="metadata" muted playsinline>
-                            <source src="${project.videoUrl}" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="project-icon">
-                        <i class="fas ${project.icon}"></i>
-                    </div>
-                    <div class="project-header">
-                        <h3 class="project-title">${project.title}</h3>
-                        <span class="project-category">${project.categoryLabel}</span>
-                    </div>
-                    <p class="project-description">${project.description}</p>
-                    <div class="project-tags">
-                        ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
-                    </div>
-                    <div class="project-footer">
-                        <span class="project-date"><i class="far fa-calendar"></i> ${project.date}</span>
-                        ${project.link
-                            ? `<a href="${project.link}" target="_blank" rel="noopener" class="project-link"><span>Voir le code</span><i class="fab fa-github"></i></a>`
-                            : `<span class="project-poc-badge"><i class="fas fa-lock"></i> POC Interne</span>`
-                        }
-                    </div>
-                </article>
-            `;
-        }
-
         return `
             <article class="project-card" data-category="${project.category}" style="animation-delay: ${idx * 0.08}s">
                 ${project.videoUrl ? `<div class="project-video-wrapper"><video controls preload="metadata" muted playsinline><source src="${project.videoUrl}" type="video/mp4"></video></div>` : ''}
@@ -477,14 +441,9 @@
     function renderProjects(filter = 'all') {
         if (!projectsGrid) return;
 
-        let filtered;
-        if (filter === 'all') {
-            filtered = projects;
-        } else if (filter === 'vitrine') {
-            filtered = projects.filter(p => p.vitrine);
-        } else {
-            filtered = projects.filter(p => p.category === filter);
-        }
+        const filtered = filter === 'all'
+            ? projects
+            : projects.filter(p => p.category === filter);
 
         projectsGrid.innerHTML = filtered.map((project, idx) => createProjectCard(project, idx)).join('');
     }
