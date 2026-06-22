@@ -260,17 +260,7 @@
             link: 'https://github.com/yacineberkani/Flight-Search-Agent',
             videoUrl: 'https://github.com/user-attachments/assets/d5561a82-e9de-412d-a601-ed4e1be758f7'
         },
-        {
-            title: 'Fatigue Driving Detection',
-            description: 'Détection en temps réel de la fatigue du conducteur par Computer Vision — analyse du comportement des yeux et du visage via caméra pour alerter en cas de somnolence.',
-            category: 'ml',
-            categoryLabel: 'Computer Vision',
-            icon: 'fa-car',
-            tags: ['Python', 'OpenCV', 'Deep Learning', 'Real-time', 'dlib'],
-            date: 'Juin 2026',
-            link: 'https://github.com/yacineberkani/yacineberkani-Fatigue-Driving-Detection',
-            videoUrl: 'https://github.com/user-attachments/assets/edcd9028-eadc-4004-b90f-4306def56f04'
-        },
+
         {
             title: 'CV Evaluator',
             description: 'Évaluateur automatique de CV propulsé par LLM — analyse, scoring et recommandations personnalisées pour optimiser les candidatures et aider les recruteurs.',
@@ -281,6 +271,17 @@
             date: 'Juin 2026',
             link: 'https://github.com/yacineberkani/cv_evaluator',
             videoUrl: 'https://github.com/user-attachments/assets/45300066-c809-473d-ba67-3bd57212b555'
+        },
+       
+        {
+            title: 'Fatigue Driving Detection',
+            description: 'Détection en temps réel de la fatigue du conducteur par Computer Vision — analyse du comportement des yeux et du visage via caméra pour alerter en cas de somnolence.',
+            category: 'ml',
+            categoryLabel: 'Computer Vision',
+            icon: 'fa-car',
+            tags: ['Python', 'OpenCV', 'Deep Learning', 'Real-time', 'dlib'],
+            date: 'Juin 2026',
+            link: 'https://github.com/yacineberkani/yacineberkani-Fatigue-Driving-Detection'
         },
         {
             title: 'RAG Multi-Documents',
