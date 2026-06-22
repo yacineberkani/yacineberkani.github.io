@@ -239,6 +239,55 @@
     // =====================================================================
     const projects = [
         {
+            title: 'Agent FinOps GCP',
+            description: 'Assistant IA pour l\'optimisation des coûts GCP — interrogation en langage naturel des données BigQuery, analyse par service, inventaire des ressources et actualités GCP en temps réel. Interface CLI + UI web.',
+            category: 'llm',
+            categoryLabel: 'AI Agent / GCP',
+            icon: 'fa-coins',
+            tags: ['Python', 'GCP', 'BigQuery', 'Gemini', 'FinOps', 'React'],
+            date: 'Juin 2026',
+            videoUrl: 'https://github.com/user-attachments/assets/de3229a1-7509-4896-b849-e8b04221a4a1',
+            featured: true,
+            vitrine: true,
+            poc: true
+        },
+        {
+            title: 'Flight Search Agent',
+            description: 'Agent IA autonome de recherche de vols en temps réel. Exploite des outils LLM pour interroger des API, comparer les offres et présenter les résultats en langage naturel.',
+            category: 'llm',
+            categoryLabel: 'AI Agent',
+            icon: 'fa-plane',
+            tags: ['Python', 'LLM', 'AI Agent', 'API', 'Streamlit'],
+            date: 'Juin 2026',
+            link: 'https://github.com/yacineberkani/Flight-Search-Agent',
+            videoUrl: 'https://github.com/user-attachments/assets/d5561a82-e9de-412d-a601-ed4e1be758f7',
+            featured: true,
+            vitrine: true
+        },
+        {
+            title: 'Fatigue Driving Detection',
+            description: 'Détection en temps réel de la fatigue du conducteur par Computer Vision — analyse du comportement des yeux et du visage via caméra pour alerter en cas de somnolence.',
+            category: 'ml',
+            categoryLabel: 'Computer Vision',
+            icon: 'fa-car',
+            tags: ['Python', 'OpenCV', 'Deep Learning', 'Real-time', 'dlib'],
+            date: 'Juin 2026',
+            link: 'https://github.com/yacineberkani/yacineberkani-Fatigue-Driving-Detection',
+        },
+        {
+            title: 'CV Evaluator',
+            description: 'Évaluateur automatique de CV propulsé par LLM — analyse, scoring et recommandations personnalisées pour optimiser les candidatures et aider les recruteurs.',
+            category: 'llm',
+            categoryLabel: 'LLM / NLP',
+            icon: 'fa-file-pen',
+            tags: ['Python', 'LLM', 'NLP', 'Streamlit', 'RAG'],
+            date: 'Juin 2026',
+            link: 'https://github.com/yacineberkani/cv_evaluator',
+            videoUrl: 'https://github.com/user-attachments/assets/45300066-c809-473d-ba67-3bd57212b555',
+            featured: true,
+            vitrine: true
+        },
+        {
             title: 'RAG Multi-Documents',
             description: 'Projet destiné aux utilisateurs souhaitant extraire et analyser des informations de plusieurs fichiers PDF via une architecture RAG avec LLM.',
             category: 'llm',
@@ -368,15 +417,41 @@
     // =====================================================================
     const projectsGrid = document.getElementById('projectsGrid');
 
-    function renderProjects(filter = 'all') {
-        if (!projectsGrid) return;
+    function createProjectCard(project, idx) {
+        if (project.vitrine && project.videoUrl) {
+            return `
+                <article class="project-card vitrine" data-category="${project.category}" style="animation-delay: ${idx * 0.08}s">
+                    <div class="vitrine-badge"><i class="fas fa-star"></i> Vitrine</div>
+                    <div class="project-video-wrapper">
+                        <video controls preload="metadata" muted playsinline>
+                            <source src="${project.videoUrl}" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="project-icon">
+                        <i class="fas ${project.icon}"></i>
+                    </div>
+                    <div class="project-header">
+                        <h3 class="project-title">${project.title}</h3>
+                        <span class="project-category">${project.categoryLabel}</span>
+                    </div>
+                    <p class="project-description">${project.description}</p>
+                    <div class="project-tags">
+                        ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-date"><i class="far fa-calendar"></i> ${project.date}</span>
+                        ${project.link
+                            ? `<a href="${project.link}" target="_blank" rel="noopener" class="project-link"><span>Voir le code</span><i class="fab fa-github"></i></a>`
+                            : `<span class="project-poc-badge"><i class="fas fa-lock"></i> POC Interne</span>`
+                        }
+                    </div>
+                </article>
+            `;
+        }
 
-        const filtered = filter === 'all'
-            ? projects
-            : projects.filter(p => p.category === filter);
-
-        projectsGrid.innerHTML = filtered.map((project, idx) => `
+        return `
             <article class="project-card" data-category="${project.category}" style="animation-delay: ${idx * 0.08}s">
+                ${project.videoUrl ? `<div class="project-video-wrapper"><video controls preload="metadata" muted playsinline><source src="${project.videoUrl}" type="video/mp4"></video></div>` : ''}
                 <div class="project-icon">
                     <i class="fas ${project.icon}"></i>
                 </div>
@@ -390,13 +465,28 @@
                 </div>
                 <div class="project-footer">
                     <span class="project-date"><i class="far fa-calendar"></i> ${project.date}</span>
-                    <a href="${project.link}" target="_blank" rel="noopener" class="project-link">
-                        <span>Voir le code</span>
-                        <i class="fab fa-github"></i>
-                    </a>
+                    ${project.link
+                        ? `<a href="${project.link}" target="_blank" rel="noopener" class="project-link"><span>Voir le code</span><i class="fab fa-github"></i></a>`
+                        : `<span class="project-poc-badge"><i class="fas fa-lock"></i> POC Interne</span>`
+                    }
                 </div>
             </article>
-        `).join('');
+        `;
+    }
+
+    function renderProjects(filter = 'all') {
+        if (!projectsGrid) return;
+
+        let filtered;
+        if (filter === 'all') {
+            filtered = projects;
+        } else if (filter === 'vitrine') {
+            filtered = projects.filter(p => p.vitrine);
+        } else {
+            filtered = projects.filter(p => p.category === filter);
+        }
+
+        projectsGrid.innerHTML = filtered.map((project, idx) => createProjectCard(project, idx)).join('');
     }
 
     renderProjects();
