@@ -830,6 +830,10 @@ button {
     gap: 1.5rem;
 }
 
+.about-stats .stat-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+}
+
 .stat-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
