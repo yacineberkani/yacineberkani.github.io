@@ -1170,6 +1170,37 @@ button {
     font-weight: 700;
 }
 
+.cert-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.cert-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: #fff;
+    background: var(--accent-gradient);
+}
+
+.cert-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-primary, currentColor);
+}
+
+.cert-link i { font-size: 0.75rem; }
+
 .education-card p {
     color: var(--text-secondary);
     font-size: 0.9rem;
