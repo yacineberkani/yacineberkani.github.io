@@ -2,7 +2,7 @@
 
 Site portfolio personnel moderne et responsive, construit en **HTML5 / CSS3 / JavaScript vanilla**, sans framework lourd.
 
-> 💡 Conçu pour mettre en valeur 5 ans d'expérience en Machine Learning, MLOps, LLM/RAG et Cloud GCP.
+> 💡 Conçu pour mettre en valeur mon expertise en Machine Learning, MLOps, LLM/RAG et Cloud GCP.
 
 ---
 
