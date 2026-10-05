@@ -21,7 +21,7 @@ Site portfolio personnel moderne et responsive, construit en **HTML5 / CSS3 / Ja
 - ⚡ **Performances** : CSS et JS minifiables, lazy-loading des ressources non critiques
 - ♿ **Accessibilité** : labels ARIA, contraste WCAG AA, navigation clavier
 - 🎯 **Filtres dynamiques** sur les projets (ML, LLM/RAG, Data, Web)
-- 📨 **Formulaire de contact** avec ouverture du client mail natif
+- 📨 **Formulaire de contact** (prénom, nom, email, secteur d'activité, sujet obligatoires) envoyé par email via [Resend](https://resend.com) — backend dans `contact-worker/`
 - 🔄 **Scroll progress bar** + bouton "back to top"
 - 📈 **SEO friendly** : meta tags, structure sémantique HTML5
 

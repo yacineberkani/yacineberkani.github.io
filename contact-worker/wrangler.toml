@@ -1,0 +1,7 @@
+name = "contact-form"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+# Secrets à définir (NE PAS les écrire ici) :
+#   npx wrangler secret put RESEND_API_KEY
+#   npx wrangler secret put CONTACT_TO_EMAIL

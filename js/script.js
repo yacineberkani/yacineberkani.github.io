@@ -458,39 +458,77 @@
     // =====================================================================
     // 13. FORMULAIRE DE CONTACT
     // =====================================================================
+    // URL du Worker Cloudflare qui envoie l'email via Resend (voir contact-worker/).
+    // La clé API Resend reste côté serveur : elle ne doit JAMAIS apparaître ici.
+    const CONTACT_ENDPOINT = 'https://contact-form.yacineberkani.workers.dev';
+
     const contactForm = document.getElementById('contactForm');
     const formStatus = document.getElementById('formStatus');
 
     if (contactForm) {
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const submitLabel = submitBtn ? submitBtn.querySelector('span') : null;
+        const defaultLabel = submitLabel ? submitLabel.textContent : '';
+
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const formData = new FormData(contactForm);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const subject = formData.get('subject');
-            const message = formData.get('message');
+            const data = {
+                firstName: (formData.get('firstName') || '').trim(),
+                lastName: (formData.get('lastName') || '').trim(),
+                email: (formData.get('email') || '').trim(),
+                sector: formData.get('sector') || '',
+                subject: formData.get('subject') || '',
+                message: (formData.get('message') || '').trim(),
+                website: formData.get('website') || '' // honeypot
+            };
 
-            // Validation simple
-            if (!name || !email || !subject || !message) {
-                showFormStatus('Veuillez remplir tous les champs.', 'error');
+            // Validation : tous les champs sont obligatoires
+            if (!data.firstName || !data.lastName || !data.email || !data.sector || !data.subject || !data.message) {
+                showFormStatus('Merci de vous présenter : prénom, nom, email, secteur d\'activité, sujet et message sont obligatoires.', 'error');
+                return;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+                showFormStatus('Veuillez saisir une adresse email valide.', 'error');
+                return;
+            }
+            if (data.message.length < 10) {
+                showFormStatus('Votre message est un peu court (10 caractères minimum).', 'error');
                 return;
             }
 
-            // Comme il n'y a pas de backend, on ouvre le client mail
-            const mailtoLink = `mailto:yacineberkani32@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
-                `Nom: ${name}\nEmail: ${email}\n\n${message}`
-            )}`;
+            if (submitBtn) submitBtn.disabled = true;
+            if (submitLabel) submitLabel.textContent = 'Envoi en cours...';
 
-            showFormStatus('Ouverture de votre client mail...', 'success');
-            setTimeout(() => {
-                window.location.href = mailtoLink;
+            try {
+                const res = await fetch(CONTACT_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json().catch(() => ({}));
+
+                if (!res.ok) {
+                    throw new Error(result.error || 'Erreur lors de l\'envoi.');
+                }
+
+                showFormStatus('Merci ' + data.firstName + ' ! Votre message a bien été envoyé, je vous réponds rapidement.', 'success');
                 contactForm.reset();
                 setTimeout(() => {
                     formStatus.style.display = 'none';
                     formStatus.classList.remove('success', 'error');
-                }, 3000);
-            }, 800);
+                }, 6000);
+            } catch (err) {
+                const msg = (err instanceof TypeError || !err || !err.message)
+                    ? 'Impossible de contacter le serveur.'
+                    : err.message;
+                showFormStatus(msg +
+                    ' Vous pouvez aussi m\'écrire directement à yacineberkani32@gmail.com.', 'error');
+            } finally {
+                if (submitBtn) submitBtn.disabled = false;
+                if (submitLabel) submitLabel.textContent = defaultLabel;
+            }
         });
     }
 

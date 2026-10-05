@@ -551,28 +551,72 @@
                 </div>
 
                 <form class="contact-form" id="contactForm" data-aos="fade-left">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" id="firstName" name="firstName" autocomplete="given-name" maxlength="80" required>
+                            <label for="firstName">Prénom *</label>
+                            <span class="form-line"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" id="lastName" name="lastName" autocomplete="family-name" maxlength="80" required>
+                            <label for="lastName">Nom *</label>
+                            <span class="form-line"></span>
+                        </div>
+                    </div>
+
                     <div class="form-group">
-                        <input type="text" id="name" name="name" required>
-                        <label for="name">Votre nom</label>
+                        <input type="email" id="email" name="email" autocomplete="email" maxlength="160" required>
+                        <label for="email">Votre email *</label>
+                        <span class="form-line"></span>
+                    </div>
+
+                    <div class="form-group form-select">
+                        <select id="sector" name="sector" required>
+                            <option value="" disabled selected hidden></option>
+                            <option value="Recrutement / RH">Recrutement / RH</option>
+                            <option value="ESN / Conseil IT">ESN / Conseil IT</option>
+                            <option value="Startup / Tech">Startup / Tech</option>
+                            <option value="Finance / Banque / Assurance">Finance / Banque / Assurance</option>
+                            <option value="Santé / Pharma">Santé / Pharma</option>
+                            <option value="Industrie / Énergie">Industrie / Énergie</option>
+                            <option value="Commerce / E-commerce">Commerce / E-commerce</option>
+                            <option value="Recherche / Enseignement">Recherche / Enseignement</option>
+                            <option value="Secteur public">Secteur public</option>
+                            <option value="Étudiant">Étudiant</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                        <label for="sector">Secteur d'activité *</label>
+                        <span class="form-line"></span>
+                    </div>
+
+                    <div class="form-group form-select">
+                        <select id="subject" name="subject" required>
+                            <option value="" disabled selected hidden></option>
+                            <option value="Opportunité d'emploi (CDI / CDD)">Opportunité d'emploi (CDI / CDD)</option>
+                            <option value="Mission freelance">Mission freelance</option>
+                            <option value="Stage / Alternance">Stage / Alternance</option>
+                            <option value="Projet ML / IA">Projet ML / IA</option>
+                            <option value="LLM / RAG">LLM / RAG</option>
+                            <option value="MLOps / Cloud">MLOps / Cloud</option>
+                            <option value="Collaboration / Partenariat">Collaboration / Partenariat</option>
+                            <option value="Question technique">Question technique</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                        <label for="subject">Sujet *</label>
                         <span class="form-line"></span>
                     </div>
 
                     <div class="form-group">
-                        <input type="email" id="email" name="email" required>
-                        <label for="email">Votre email</label>
+                        <textarea id="message" name="message" rows="5" minlength="10" maxlength="5000" required></textarea>
+                        <label for="message">Votre message *</label>
                         <span class="form-line"></span>
                     </div>
 
-                    <div class="form-group">
-                        <input type="text" id="subject" name="subject" required>
-                        <label for="subject">Sujet</label>
-                        <span class="form-line"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                        <label for="message">Votre message</label>
-                        <span class="form-line"></span>
+                    <!-- Anti-spam (honeypot) : doit rester vide -->
+                    <div class="form-honeypot" aria-hidden="true">
+                        <label for="website">Ne pas remplir</label>
+                        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-full">
