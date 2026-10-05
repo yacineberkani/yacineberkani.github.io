@@ -245,32 +245,44 @@ button {
     visibility: hidden;
 }
 
-.loader {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.preloader {
+    flex-direction: column;
+    gap: 1.25rem;
 }
 
-.loader-circle {
-    position: absolute;
-    inset: 0;
-    border: 3px solid var(--border-color);
-    border-top-color: var(--accent-primary);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-.loader-text {
+.loader-logo {
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.loader-logo .logo-bracket:first-child { animation: logoBracketLeft 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.loader-logo .logo-bracket:last-child  { animation: logoBracketRight 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.loader-logo .logo-text { animation: logoTextPop 0.6s 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both, logoGradient 3s linear infinite; }
+
+.loader-bar {
+    width: 120px;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--border-color);
+    overflow: hidden;
+}
+
+.loader-bar span {
+    display: block;
+    height: 100%;
+    width: 40%;
+    border-radius: 3px;
     background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    animation: loaderBar 1s ease-in-out infinite;
+}
+
+@keyframes loaderBar {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(250%); }
 }
 
 @keyframes spin {
@@ -361,12 +373,51 @@ button {
     gap: 2px;
 }
 
-.logo-bracket { color: var(--accent-primary); }
+.logo-bracket {
+    color: var(--accent-primary);
+    display: inline-block;
+    transition: transform var(--transition-base), color var(--transition-base);
+}
 .logo-text {
-    background: var(--accent-gradient);
+    display: inline-block;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary), var(--accent-secondary), var(--accent-primary));
+    background-size: 200% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: logoGradient 6s linear infinite;
+}
+
+/* Logo dynamique : rejoué à chaque chargement de la page */
+.is-loaded .nav-logo .logo-bracket:first-child { animation: logoBracketLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.is-loaded .nav-logo .logo-bracket:last-child  { animation: logoBracketRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.is-loaded .nav-logo .logo-text {
+    animation: logoTextPop 0.7s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both, logoGradient 6s linear infinite;
+}
+
+/* Survol : les chevrons s'écartent */
+.nav-logo:hover .logo-bracket:first-child { transform: translateX(-4px); color: var(--accent-tertiary); }
+.nav-logo:hover .logo-bracket:last-child  { transform: translateX(4px);  color: var(--accent-tertiary); }
+
+@keyframes logoBracketLeft {
+    0%   { opacity: 0; transform: translateX(14px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes logoBracketRight {
+    0%   { opacity: 0; transform: translateX(-14px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes logoTextPop {
+    0%   { opacity: 0; transform: scale(0.4) rotate(-8deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+@keyframes logoGradient {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .logo-text, .logo-bracket, .loader-bar span { animation: none !important; }
 }
 
 .nav-menu {
