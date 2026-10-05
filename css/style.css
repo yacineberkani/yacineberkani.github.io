@@ -245,44 +245,32 @@ button {
     visibility: hidden;
 }
 
-.preloader {
-    flex-direction: column;
-    gap: 1.25rem;
-}
-
-.loader-logo {
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 3rem;
+.loader {
+    position: relative;
+    width: 100px;
+    height: 100px;
     display: flex;
     align-items: center;
-    gap: 4px;
+    justify-content: center;
 }
 
-.loader-logo .logo-bracket:first-child { animation: logoBracketLeft 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-.loader-logo .logo-bracket:last-child  { animation: logoBracketRight 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-.loader-logo .logo-text { animation: logoTextPop 0.6s 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both, logoGradient 3s linear infinite; }
-
-.loader-bar {
-    width: 120px;
-    height: 3px;
-    border-radius: 3px;
-    background: var(--border-color);
-    overflow: hidden;
+.loader-circle {
+    position: absolute;
+    inset: 0;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
-.loader-bar span {
-    display: block;
-    height: 100%;
-    width: 40%;
-    border-radius: 3px;
+.loader-text {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.5rem;
     background: var(--accent-gradient);
-    animation: loaderBar 1s ease-in-out infinite;
-}
-
-@keyframes loaderBar {
-    0%   { transform: translateX(-100%); }
-    100% { transform: translateX(250%); }
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 @keyframes spin {
@@ -389,10 +377,28 @@ button {
 }
 
 /* Logo dynamique : rejoué à chaque chargement de la page */
-.is-loaded .nav-logo .logo-bracket:first-child { animation: logoBracketLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-.is-loaded .nav-logo .logo-bracket:last-child  { animation: logoBracketRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
 .is-loaded .nav-logo .logo-text {
     animation: logoTextPop 0.7s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both, logoGradient 6s linear infinite;
+}
+
+/* En continu : les chevrons « respirent » (s'écartent et changent de couleur) */
+.is-loaded .nav-logo .logo-bracket:first-child {
+    animation: logoBracketLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+               logoBreatheLeft 3s 1s ease-in-out infinite;
+}
+.is-loaded .nav-logo .logo-bracket:last-child {
+    animation: logoBracketRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+               logoBreatheRight 3s 1s ease-in-out infinite;
+}
+.is-loaded .nav-logo:hover .logo-bracket { animation: none; }
+
+@keyframes logoBreatheLeft {
+    0%, 100% { transform: translateX(0); color: var(--accent-primary); }
+    50%      { transform: translateX(-4px); color: var(--accent-tertiary); }
+}
+@keyframes logoBreatheRight {
+    0%, 100% { transform: translateX(0); color: var(--accent-primary); }
+    50%      { transform: translateX(4px); color: var(--accent-tertiary); }
 }
 
 /* Survol : les chevrons s'écartent */
@@ -417,7 +423,7 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .logo-text, .logo-bracket, .loader-bar span { animation: none !important; }
+    .logo-text, .logo-bracket { animation: none !important; }
 }
 
 .nav-menu {

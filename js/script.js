@@ -16,7 +16,7 @@
                 preloader.classList.add('hidden');
                 document.body.classList.add('is-loaded'); // lance l'animation du logo
                 setTimeout(() => preloader.remove(), 600);
-            }, 700);
+            }, 500);
         } else {
             document.body.classList.add('is-loaded');
         }
