@@ -105,6 +105,7 @@ export default {
             firstName: clean(body.firstName, 80),
             lastName: clean(body.lastName, 80),
             email: clean(body.email, 160),
+            company: clean(body.company, 120),
             sector: clean(body.sector, 100),
             subject: clean(body.subject, 100),
             message: clean(body.message, 5000)
@@ -137,6 +138,7 @@ export default {
                 <tr><td><b>Prénom</b></td><td>${escapeHtml(data.firstName)}</td></tr>
                 <tr><td><b>Nom</b></td><td>${escapeHtml(data.lastName)}</td></tr>
                 <tr><td><b>Email</b></td><td>${escapeHtml(data.email)}</td></tr>
+                <tr><td><b>Entreprise</b></td><td>${escapeHtml(data.company || '—')}</td></tr>
                 <tr><td><b>Secteur d'activité</b></td><td>${escapeHtml(data.sector)}</td></tr>
                 <tr><td><b>Sujet</b></td><td>${escapeHtml(data.subject)}</td></tr>
             </table>
@@ -146,6 +148,7 @@ export default {
         const text =
             `Nouveau message depuis le portfolio\n\n` +
             `Prénom : ${data.firstName}\nNom : ${data.lastName}\nEmail : ${data.email}\n` +
+            `Entreprise : ${data.company || '—'}\n` +
             `Secteur d'activité : ${data.sector}\nSujet : ${data.subject}\n\n${data.message}`;
 
         const resendRes = await fetch('https://api.resend.com/emails', {

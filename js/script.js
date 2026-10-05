@@ -470,6 +470,17 @@
         const submitLabel = submitBtn ? submitBtn.querySelector('span') : null;
         const defaultLabel = submitLabel ? submitLabel.textContent : '';
 
+        // Compteur de caractères du message
+        const messageInput = document.getElementById('message');
+        const messageCounter = document.getElementById('messageCounter');
+        const updateCounter = () => {
+            if (messageInput && messageCounter) {
+                messageCounter.textContent = messageInput.value.length + ' / ' + messageInput.maxLength;
+            }
+        };
+        if (messageInput) messageInput.addEventListener('input', updateCounter);
+        contactForm.addEventListener('reset', () => setTimeout(updateCounter, 0));
+
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -478,6 +489,7 @@
                 firstName: (formData.get('firstName') || '').trim(),
                 lastName: (formData.get('lastName') || '').trim(),
                 email: (formData.get('email') || '').trim(),
+                company: (formData.get('company') || '').trim(),
                 sector: formData.get('sector') || '',
                 subject: formData.get('subject') || '',
                 message: (formData.get('message') || '').trim(),
@@ -487,6 +499,10 @@
             // Validation : tous les champs sont obligatoires
             if (!data.firstName || !data.lastName || !data.email || !data.sector || !data.subject || !data.message) {
                 showFormStatus('Merci de vous présenter : prénom, nom, email, secteur d\'activité, sujet et message sont obligatoires.', 'error');
+                return;
+            }
+            if (!formData.get('consent')) {
+                showFormStatus('Merci d\'accepter l\'utilisation de vos informations pour que je puisse vous répondre.', 'error');
                 return;
             }
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
