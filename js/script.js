@@ -460,7 +460,7 @@
     // =====================================================================
     // URL du Worker Cloudflare qui envoie l'email via Resend (voir contact-worker/).
     // La clé API Resend reste côté serveur : elle ne doit JAMAIS apparaître ici.
-    const CONTACT_ENDPOINT = 'https://contact-form.yacineberkani.workers.dev';
+    const CONTACT_ENDPOINT = 'https://contact-form.yacineberkani32.workers.dev';
 
     const contactForm = document.getElementById('contactForm');
     const formStatus = document.getElementById('formStatus');
