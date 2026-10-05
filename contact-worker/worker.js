@@ -35,7 +35,6 @@ const SECTORS = [
 const SUBJECTS = [
     "Opportunité d'emploi (CDI / CDD)",
     'Mission freelance',
-    'Stage / Alternance',
     'Projet ML / IA',
     'LLM / RAG',
     'MLOps / Cloud',
