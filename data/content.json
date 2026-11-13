@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-13T19:23:25.288Z",
+  "updatedAt": "2026-11-13T19:31:53.373Z",
   "meta": {
     "siteTitle": "Yacine Berkani | ML Engineer",
     "description": "Portfolio de Yacine Berkani - ML Engineer spécialisé en MLOps, LLM, RAG et GCP",
@@ -296,6 +296,25 @@
             "name": "MySQL"
           }
         ]
+      },
+      {
+        "name": "cloudera",
+        "icon": "fas fa-code",
+        "items": [
+          {
+            "name": "Hadoop"
+          },
+          {
+            "name": "cdp"
+          },
+          {
+            "name": "kafka"
+          },
+          {
+            "name": "yarn"
+          }
+        ],
+        "id": "cloudera"
       }
     ]
   },
