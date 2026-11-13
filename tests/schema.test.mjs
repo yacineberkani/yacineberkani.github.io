@@ -3,9 +3,15 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { validateContent } from '../admin/js/schema.js';
 
-const content = JSON.parse(readFileSync(new URL('../data/content.json', import.meta.url), 'utf8'));
+// Jeu de données figé : les tests ne dépendent pas du contenu réel, que l'admin modifie.
+const content = JSON.parse(readFileSync(new URL('./fixtures/content.sample.json', import.meta.url), 'utf8'));
+const liveContent = JSON.parse(readFileSync(new URL('../data/content.json', import.meta.url), 'utf8'));
 
-test('le content.json réel est valide', () => {
+test('le content.json publié est valide', () => {
+  assert.deepEqual(validateContent(liveContent), []);
+});
+
+test('le jeu de données de test est valide', () => {
   assert.deepEqual(validateContent(content), []);
 });
 
@@ -37,8 +43,10 @@ test('catégorie de projet inconnue refusée', () => {
 
 test('statistique non numérique refusée', () => {
   const c = structuredClone(content);
-  c.stats[0].value = 'abc';
+  c.stats[0] = { id: 'stat-x', label: 'X', value: 'abc', suffix: '+' };
   assert.ok(validateContent(c).some(e => e.path === 'stats[0].value'));
+  c.stats[0] = { id: 'stat-x', label: 'X', value: null, suffix: '+', source: 'years' };
+  assert.deepEqual(validateContent(c), []); // valeur prise dans le profil
 });
 
 test('objet non conforme → erreur racine sans exception', () => {

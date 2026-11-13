@@ -1,0 +1,809 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-11-13T00:00:00.000Z",
+  "meta": {
+    "siteTitle": "Yacine Berkani | ML Engineer",
+    "description": "Portfolio de Yacine Berkani - ML Engineer spécialisé en MLOps, LLM, RAG et GCP",
+    "footerTagline": "ML Engineer — Transformer les modèles en services robustes et scalables."
+  },
+  "profile": {
+    "firstName": "Yacine",
+    "lastName": "Berkani",
+    "title": "ML Engineer",
+    "photo": {
+      "src": "assets/images/Media.jpg",
+      "alt": "Yacine Berkani - ML Engineer"
+    },
+    "availability": {
+      "status": "open",
+      "label": "Disponible pour de nouvelles opportunités"
+    },
+    "yearsOfExperience": 5,
+    "typedPhrases": [
+      "ML Engineer",
+      "MLOps Specialist",
+      "LLM & RAG Expert",
+      "Cloud Architect GCP",
+      "Data Engineer"
+    ],
+    "heroDescription": "Ingénieur Machine Learning spécialisé dans la conception et l'industrialisation de solutions IA en production. Spécialisé en **LLM, RAG, MLOps** et architectures cloud **GCP**. Je transforme des modèles en services robustes, scalables et réellement utilisés.",
+    "heroBadges": [
+      {
+        "icon": "fas fa-brain",
+        "label": "ML"
+      },
+      {
+        "icon": "fas fa-cloud",
+        "label": "GCP"
+      },
+      {
+        "icon": "fas fa-code",
+        "label": "Python"
+      },
+      {
+        "icon": "fas fa-robot",
+        "label": "LLM"
+      }
+    ],
+    "about": {
+      "subtitle": "Passionné par l'industrialisation de l'IA",
+      "paragraphs": [
+        "Je travaille sur des sujets de ==machine learning en production==, avec une vraie appétence pour tout ce qui touche à l'industrialisation et à la scalabilité.",
+        "Chez **Assystem**, j'ai conçu une solution complète sur ==GCP== pour automatiser l'analyse de documents techniques, en allant du pipeline de données jusqu'à l'exposition via API, avec des contraintes fortes de performance et de fiabilité.",
+        "J'ai notamment travaillé sur des architectures basées sur des ==LLM et du RAG==, avec du fine-tuning (QLoRA) et de l'A/B testing en production. Ce que j'aime dans mon métier, c'est transformer des modèles en services réellement utilisés, ==robustes et monitorés==.",
+        "J'interviens aussi bien sur la partie **data**, **ML** que sur **l'infrastructure**, avec une forte sensibilité MLOps."
+      ],
+      "facts": [
+        {
+          "icon": "fas fa-map-marker-alt",
+          "label": "Localisation",
+          "value": "Île-de-France"
+        },
+        {
+          "icon": "fas fa-graduation-cap",
+          "label": "Formation",
+          "value": "Master Big Data - Data Science"
+        },
+        {
+          "icon": "fas fa-language",
+          "label": "Langues",
+          "value": "FR, EN, Kabyle"
+        }
+      ]
+    }
+  },
+  "contact": {
+    "subtitle": "Toujours ouvert à de nouvelles opportunités et collaborations",
+    "heading": "Discutons de votre projet",
+    "text": "Vous avez un projet ML en tête, une idée à industrialiser, ou simplement envie d'échanger sur l'IA ? N'hésitez pas à me contacter, je réponds rapidement !",
+    "email": "yacineberkani32@gmail.com",
+    "links": [
+      {
+        "id": "github",
+        "label": "GitHub",
+        "display": "@yacineberkani",
+        "url": "https://github.com/yacineberkani",
+        "icon": "fab fa-github"
+      },
+      {
+        "id": "linkedin",
+        "label": "LinkedIn",
+        "display": "yacine-berkani",
+        "url": "https://www.linkedin.com/in/yacine-berkani-a66189244/",
+        "icon": "fab fa-linkedin-in"
+      }
+    ]
+  },
+  "stats": [
+    {
+      "id": "stat-projects",
+      "value": 24,
+      "suffix": "+",
+      "label": "Projets GitHub"
+    },
+    {
+      "id": "stat-tech",
+      "value": 15,
+      "suffix": "+",
+      "label": "Technologies maîtrisées"
+    },
+    {
+      "id": "stat-detection",
+      "value": 95,
+      "suffix": "%",
+      "label": "Taux de détection projet IA"
+    }
+  ],
+  "skills": {
+    "subtitle": "Les technologies que j'utilise au quotidien",
+    "categories": [
+      {
+        "id": "ml",
+        "name": "Machine Learning & IA",
+        "icon": "fas fa-brain",
+        "items": [
+          {
+            "name": "TensorFlow"
+          },
+          {
+            "name": "PyTorch"
+          },
+          {
+            "name": "Scikit-learn"
+          },
+          {
+            "name": "Keras"
+          },
+          {
+            "name": "Deep Learning"
+          },
+          {
+            "name": "NLP"
+          },
+          {
+            "name": "Computer Vision"
+          }
+        ]
+      },
+      {
+        "id": "llm",
+        "name": "LLM & Generative AI",
+        "icon": "fas fa-robot",
+        "items": [
+          {
+            "name": "ChatGPT"
+          },
+          {
+            "name": "Gemini"
+          },
+          {
+            "name": "Gemma"
+          },
+          {
+            "name": "Mistral"
+          },
+          {
+            "name": "LLaMA-3"
+          },
+          {
+            "name": "RAG"
+          },
+          {
+            "name": "QLoRA"
+          },
+          {
+            "name": "Prompt Engineering"
+          }
+        ]
+      },
+      {
+        "id": "mlops",
+        "name": "MLOps & DevOps",
+        "icon": "fas fa-cogs",
+        "items": [
+          {
+            "name": "Airflow"
+          },
+          {
+            "name": "Vertex AI"
+          },
+          {
+            "name": "Cloud Run"
+          },
+          {
+            "name": "Terraform"
+          },
+          {
+            "name": "Docker"
+          },
+          {
+            "name": "FastAPI"
+          },
+          {
+            "name": "CI/CD"
+          },
+          {
+            "name": "GitLab"
+          }
+        ]
+      },
+      {
+        "id": "cloud",
+        "name": "Cloud & Infrastructure",
+        "icon": "fas fa-cloud",
+        "items": [
+          {
+            "name": "GCP",
+            "level": "Expert"
+          },
+          {
+            "name": "AWS"
+          },
+          {
+            "name": "BigQuery"
+          },
+          {
+            "name": "Dataproc"
+          },
+          {
+            "name": "Hadoop"
+          },
+          {
+            "name": "Spark"
+          }
+        ]
+      },
+      {
+        "id": "languages",
+        "name": "Langages",
+        "icon": "fas fa-code",
+        "items": [
+          {
+            "name": "Python",
+            "level": "Expert"
+          },
+          {
+            "name": "SQL"
+          },
+          {
+            "name": "R"
+          },
+          {
+            "name": "Scala"
+          },
+          {
+            "name": "Java"
+          },
+          {
+            "name": "Shell"
+          },
+          {
+            "name": "VBA"
+          }
+        ]
+      },
+      {
+        "id": "databases",
+        "name": "Bases de données",
+        "icon": "fas fa-database",
+        "items": [
+          {
+            "name": "PostgreSQL"
+          },
+          {
+            "name": "BigQuery"
+          },
+          {
+            "name": "Redis"
+          },
+          {
+            "name": "Pinecone"
+          },
+          {
+            "name": "ChromaDB"
+          },
+          {
+            "name": "Qdrant"
+          },
+          {
+            "name": "MySQL"
+          }
+        ]
+      }
+    ]
+  },
+  "experience": {
+    "subtitle": "Mon parcours de data à ML Engineer"
+  },
+  "experiences": [
+    {
+      "id": "exp-assystem",
+      "role": "ML Engineer",
+      "company": "Assystem EOS",
+      "start": "Oct 2024",
+      "end": "Fév 2026",
+      "description": "Conception d'une solution complète sur **GCP** pour automatiser l'analyse de documents techniques. Mise en place de pipelines **Airflow**, architecture **RAG avec FastAPI sur Cloud Run**, et fine-tuning de **Gemma 3 4B via QLoRA**.",
+      "results": [
+        {
+          "icon": "fas fa-rocket",
+          "label": "-60% temps d'analyse"
+        },
+        {
+          "icon": "fas fa-bullseye",
+          "label": "95,2% de détection"
+        }
+      ],
+      "technologies": []
+    },
+    {
+      "id": "exp-paragraphe-2",
+      "role": "ML Engineer",
+      "company": "Laboratoire Paragraphe",
+      "start": "Juil 2023",
+      "end": "Sept 2024",
+      "description": "Développement d'un moteur de recommandation de contenu scientifique. Utilisation de **RAG, LLaMA-3, BERTopic** et similarité cosinus pour optimiser la pertinence des recommandations.",
+      "results": [
+        {
+          "icon": "fas fa-bolt",
+          "label": "-70% temps de traitement"
+        }
+      ],
+      "technologies": []
+    },
+    {
+      "id": "exp-paragraphe-1",
+      "role": "ML Engineer",
+      "company": "Laboratoire Paragraphe",
+      "start": "Oct 2022",
+      "end": "Juin 2023",
+      "description": "Projet de **Computer Vision** pour la détection de tumeurs cérébrales à partir d'IRM. Modèle **VGG16 (CNN)** sous TensorFlow/Keras.",
+      "results": [
+        {
+          "icon": "fas fa-check-circle",
+          "label": "91% d'accuracy"
+        }
+      ],
+      "technologies": []
+    },
+    {
+      "id": "exp-enie",
+      "role": "Data Engineer",
+      "company": "ENIE",
+      "start": "Oct 2019",
+      "end": "Juil 2020",
+      "description": "Mise en place d'une plateforme Big Data sur **GCP** avec **Hadoop/Spark (Dataproc)** et **BigQuery**.",
+      "results": [],
+      "technologies": []
+    },
+    {
+      "id": "exp-iris",
+      "role": "Data Analyst",
+      "company": "IRIS",
+      "start": "Mars 2019",
+      "end": "Sept 2019",
+      "description": "Préparation de données **ETL/ELT** et création de tableaux de bord **Power BI**.",
+      "results": [],
+      "technologies": []
+    }
+  ],
+  "education": [
+    {
+      "id": "edu-master-p8",
+      "degree": "Master Big Data - Data Science",
+      "school": "Université Paris 8",
+      "year": "2022"
+    },
+    {
+      "id": "edu-m1-ro",
+      "degree": "Master 1 Recherche Opérationnelle",
+      "school": "UMMTO",
+      "year": "2019"
+    },
+    {
+      "id": "edu-licence",
+      "degree": "Licence Mathématiques & Informatique",
+      "school": "UMMTO",
+      "year": "2018"
+    }
+  ],
+  "certifications": [
+    {
+      "id": "cert-claude-code",
+      "title": "Claude Code in Action",
+      "issuer": "Anthropic Academy",
+      "date": "Juil 2026",
+      "url": "https://verify.skilljar.com/c/3nz5am5vvm9c",
+      "icon": "fas fa-terminal"
+    },
+    {
+      "id": "cert-agent-skills",
+      "title": "Introduction to Agent Skills",
+      "issuer": "Anthropic Academy",
+      "date": "Juil 2026",
+      "url": "https://verify.skilljar.com/c/kdzcesypt2jm",
+      "icon": "fas fa-puzzle-piece"
+    },
+    {
+      "id": "cert-mcp",
+      "title": "Introduction to Model Context Protocol",
+      "issuer": "Anthropic Academy",
+      "date": "Juil 2026",
+      "url": "https://verify.skilljar.com/c/rc7m5x36xkox",
+      "icon": "fas fa-plug"
+    }
+  ],
+  "projects": {
+    "subtitle": "Une sélection de mes projets GitHub",
+    "categories": [
+      {
+        "id": "ml",
+        "label": "Machine Learning"
+      },
+      {
+        "id": "llm",
+        "label": "LLM / RAG"
+      },
+      {
+        "id": "data",
+        "label": "Data Engineering"
+      },
+      {
+        "id": "web",
+        "label": "Web"
+      }
+    ],
+    "items": [
+      {
+        "id": "agent-finops-gcp",
+        "title": "Agent FinOps GCP",
+        "description": "Assistant IA pour l'optimisation des coûts GCP — interrogation en langage naturel des données BigQuery, analyse par service, inventaire des ressources et actualités GCP en temps réel. Interface CLI + UI web.",
+        "category": "llm",
+        "categoryLabel": "AI Agent / GCP",
+        "icon": "fas fa-coins",
+        "tags": [
+          "Python",
+          "GCP",
+          "BigQuery",
+          "Gemini",
+          "FinOps",
+          "React"
+        ],
+        "date": "Juin 2026",
+        "image": "",
+        "videoUrl": "https://github.com/user-attachments/assets/de3229a1-7509-4896-b849-e8b04221a4a1",
+        "links": {
+          "github": "",
+          "demo": "",
+          "docs": ""
+        },
+        "featured": false
+      },
+      {
+        "id": "flight-search-agent",
+        "title": "Flight Search Agent",
+        "description": "Agent IA autonome de recherche de vols en temps réel. Exploite des outils LLM pour interroger des API, comparer les offres et présenter les résultats en langage naturel.",
+        "category": "llm",
+        "categoryLabel": "AI Agent",
+        "icon": "fas fa-plane",
+        "tags": [
+          "Python",
+          "LLM",
+          "AI Agent",
+          "API",
+          "Streamlit"
+        ],
+        "date": "Juin 2026",
+        "image": "",
+        "videoUrl": "https://github.com/user-attachments/assets/d5561a82-e9de-412d-a601-ed4e1be758f7",
+        "links": {
+          "github": "https://github.com/yacineberkani/Flight-Search-Agent",
+          "demo": "",
+          "docs": ""
+        },
+        "featured": false
+      },
+      {
+        "id": "cv-evaluator",
+        "title": "CV Evaluator",
+        "description": "Évaluateur automatique de CV propulsé par LLM — analyse, scoring et recommandations personnalisées pour optimiser les candidatures et aider les recruteurs.",
+        "category": "llm",
+        "categoryLabel": "AI Agent (multi-agent)",
+        "icon": "fas fa-file-pen",
+        "tags": [
+          "Python",
+          "LLM",
+          "NLP",
+          "Streamlit",
+          "RAG"
+        ],
+        "date": "Juin 2026",
+        "image": "",
+        "videoUrl": "https://github.com/user-attachments/assets/45300066-c809-473d-ba67-3bd57212b555",
+        "links": {
+          "github": "https://github.com/yacineberkani/cv_evaluator",
+          "demo": "",
+          "docs": ""
+        },
+        "featured": false
+      },
+      {
+        "id": "fatigue-driving-detection",
+        "title": "Fatigue Driving Detection",
+        "description": "Détection en temps réel de la fatigue du conducteur par Computer Vision — analyse du comportement des yeux et du visage via caméra pour alerter en cas de somnolence.",
+        "category": "ml",
+        "categoryLabel": "Computer Vision",
+        "icon": "fas fa-car",
+        "tags": [
+          "Python",
+          "OpenCV",
+          "Deep Learning",
+          "Real-time",
+          "dlib"
+        ],
+        "date": "Juin 2026",
+        "image": "",
+        "videoUrl": "",
+        "links": {
+          "github": "https://github.com/yacineberkani/yacineberkani-Fatigue-Driving-Detection",
+          "demo": "",
+          "docs": ""
+        },
+        "featured": false
+      },
+      {
+        "id": "rag-multi-documents",
+        "title": "RAG Multi-Documents",
+        "description": "Projet destiné aux utilisateurs souhaitant extraire et analyser des informations de plusieurs fichiers PDF via une architecture RAG avec LLM.",
+        "category": "llm",
+        "categoryLabel": "LLM / RAG",
+        "icon": "fas fa-file-lines",
+        "tags": [
+          "Python",
+          "LLM",
+          "RAG",
+          "PDF"
+        ],
+        "date": "Mai 2024",
+        "image": "",
+        "videoUrl": "",
+        "links": {
+          "github": "https://github.com/yacineberkani/Rag_multidoc",
+          "demo": "",
+          "docs": ""
+        },
+        "featured": false
+      },
+      {
+        "id": "update-scraper-project",
+        "title": "Update Scraper Project",
+        "description": "Modèle NLP capable de comprendre l'intention de l'utilisateur et d'identifier les sources d'articles via topic modelling et scraping intelligent.",
+        "category": "ml",
+        "categoryLabel": "NLP",
+        "icon": "fas fa-magnifying-glass",
+        "tags": [
+          "Python",
+          "NLP",
+          "Topic Modeling",
+          "Scraping"
+        ],
+        "date": "Mars 2026",
+        "image": "",
+        "videoUrl": "",
+        "links": {
+          "github": "https://github.com/yacineberkani/Update_Scraper_Project",
+          "demo": "",
+          "docs": ""
+        },
+        "featured": false
+      },
+      {
+        "id": "detection-tumeurs",
+        "title": "Détection de Tumeurs Cérébrales",
+        "description": "Classification d'images médicales (IRM) pour la détection de tumeurs cérébrales avec un modèle CNN VGG16 sous TensorFlow/Keras. 91% d'accuracy.",
+        "category": "ml",
+        "categoryLabel": "Computer Vision",
+        "icon": "fas fa-brain",
+        "tags": [
+          "Python",
+          "TensorFlow",
+          "CNN",
+          "VGG16"
+        ],
+        "date": "Mai 2024",
+        "image": "",
+        "videoUrl": "",
+        "links": {
+          "github": "https://github.com/yacineberkani/Detection_de_Tumeurs",
+          "demo": "",
+          "docs": ""
+        },
+        "featured": false
+      },
+      {
+        "id": "projet-index",
+        "title": "Projet Index - Recherche documentaire",
+        "description": "Système d'indexation et de recherche pour stocker, indexer et rechercher efficacement des informations dans un corpus de documents textuels.",
+        "category": "ml",
+        "categoryLabel": "IR / NLP",
+        "icon": "fas fa-list-ol",
+        "tags": [
+          "Python",
+          "Indexation",
+          "NLP"
+        ],
+        "date": "Mars 2026",
+        "image": "",
+        "videoUrl": "",
+        "links": {
+          "github": "https://github.com/yacineberkani/projetINDEX",
+          "demo": "",
+          "docs": ""
+        },
+        "featured": false
+      },
+      {
+        "id": "scraper-arxiv",
+        "title": "Scraper ArXiv",
+        "description": "Outil de téléchargement automatique d'articles scientifiques depuis la plateforme arXiv en fonction de requêtes utilisateur.",
+        "category": "data",
+        "categoryLabel": "Data Engineering",
+        "icon": "fas fa-download",
+        "tags": [
+          "Python",
+          "Scraping",
+          "arXiv"
+        ],
+        "date": "Mai 2024",
+        "image": "",
+        "videoUrl": "",
+        "links": {
+          "github": "https://github.com/yacineberkani/scraping-ArXiv",
+          "demo": "",
+          "docs": ""
+        },
+        "featured": false
+      },
+      {
+        "id": "scientific-article-scraper",
+        "title": "Scientific Article Scraper",
+        "description": "Récupération d'articles scientifiques en PDF à partir d'un prompt en langage naturel. Pipeline NLP complet.",
+        "category": "llm",
+        "categoryLabel": "LLM / NLP",
+        "icon": "fas fa-robot",
+        "tags": [
+          "Python",
+          "NLP",
+          "LLM",
+          "PDF"
+        ],
+        "date": "Mai 2024",
+        "image": "",
+        "videoUrl": "",
+        "links": {
+          "github": "https://github.com/yacineberkani/Scraper_Project",
+          "demo": "",
+          "docs": ""
+        },
+        "featured": false
+      },
+      {
+        "id": "big-data-hadoop-gcp",
+        "title": "Big Data Hadoop on GCP",
+        "description": "Projet Big Data avec Hadoop et Hive déployé sur Google Cloud Platform. Pipeline de traitement de données à grande échelle.",
+        "category": "data",
+        "categoryLabel": "Big Data",
+        "icon": "fas fa-database",
+        "tags": [
+          "Hadoop",
+          "Hive",
+          "GCP",
+          "Big Data"
+        ],
+        "date": "Nov 2024",
+        "image": "",
+        "videoUrl": "",
+        "links": {
+          "github": "https://github.com/yacineberkani/projet-Big-data-Hadoop",
+          "demo": "",
+          "docs": ""
+        },
+        "featured": false
+      },
+      {
+        "id": "gen-ai",
+        "title": "GEN AI",
+        "description": "Projet d'exploration des architectures d'IA générative et prompt engineering sur différents modèles LLM.",
+        "category": "llm",
+        "categoryLabel": "Generative AI",
+        "icon": "fas fa-wand-magic-sparkles",
+        "tags": [
+          "LLM",
+          "GenAI",
+          "Prompt Engineering"
+        ],
+        "date": "Jan 2025",
+        "image": "",
+        "videoUrl": "",
+        "links": {
+          "github": "https://github.com/yacineberkani/GEN_AI",
+          "demo": "",
+          "docs": ""
+        },
+        "featured": false
+      },
+      {
+        "id": "transfer-learning-tweets",
+        "title": "Transfer Learning - Classification de Tweets",
+        "description": "Classification de tweets basée sur le transfer learning avec des modèles pré-entraînés.",
+        "category": "ml",
+        "categoryLabel": "NLP",
+        "icon": "fas fa-comment-dots",
+        "tags": [
+          "Transfer Learning",
+          "NLP",
+          "Classification"
+        ],
+        "date": "Avril 2024",
+        "image": "",
+        "videoUrl": "",
+        "links": {
+          "github": "https://github.com/yacineberkani/transfert-_learning",
+          "demo": "",
+          "docs": ""
+        },
+        "featured": false
+      },
+      {
+        "id": "chiffrement",
+        "title": "Chiffrement",
+        "description": "Projet d'implémentation d'algorithmes de cryptographie et chiffrement. Exploration de différentes techniques de sécurité.",
+        "category": "ml",
+        "categoryLabel": "Security",
+        "icon": "fas fa-lock",
+        "tags": [
+          "Python",
+          "Cryptography",
+          "Security"
+        ],
+        "date": "Déc 2024",
+        "image": "",
+        "videoUrl": "",
+        "links": {
+          "github": "https://github.com/yacineberkani/Chiffrement",
+          "demo": "",
+          "docs": ""
+        },
+        "featured": false
+      },
+      {
+        "id": "formulaire-connexion",
+        "title": "Formulaire de Connexion",
+        "description": "Système d'authentification permettant aux utilisateurs de s'inscrire et se connecter via email unique avec mot de passe sécurisé.",
+        "category": "web",
+        "categoryLabel": "Web Dev",
+        "icon": "fas fa-user-lock",
+        "tags": [
+          "Web",
+          "Auth",
+          "Backend"
+        ],
+        "date": "Mai 2024",
+        "image": "",
+        "videoUrl": "",
+        "links": {
+          "github": "https://github.com/yacineberkani/Formulaire_de_Connexion",
+          "demo": "",
+          "docs": ""
+        },
+        "featured": false
+      }
+    ]
+  },
+  "sections": {
+    "about": {
+      "visible": true,
+      "tag": "À propos",
+      "title": "Qui suis-je ?"
+    },
+    "skills": {
+      "visible": true,
+      "tag": "Compétences",
+      "title": "Stack Technique"
+    },
+    "experience": {
+      "visible": true,
+      "tag": "Parcours",
+      "title": "Expérience professionnelle"
+    },
+    "projects": {
+      "visible": true,
+      "tag": "Portfolio",
+      "title": "Projets récents"
+    },
+    "contact": {
+      "visible": true,
+      "tag": "Contact",
+      "title": "Travaillons ensemble"
+    }
+  }
+}

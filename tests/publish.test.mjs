@@ -4,7 +4,9 @@ import { readFileSync } from 'node:fs';
 import { extractImages, updateIndexMeta, publish } from '../admin/js/publish.js';
 import { detectImageType, slugify } from '../admin/js/images.js';
 
-const content = JSON.parse(readFileSync(new URL('../data/content.json', import.meta.url), 'utf8'));
+// Jeu de données figé : les tests ne dépendent pas du contenu réel, que l'admin modifie.
+const content = JSON.parse(readFileSync(new URL('./fixtures/content.sample.json', import.meta.url), 'utf8'));
+const liveContent = JSON.parse(readFileSync(new URL('../data/content.json', import.meta.url), 'utf8'));
 const indexHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const WEBP = 'data:image/webp;base64,UklGRhYAAABXRUJQVlA4IAoAAAAwAQCdASoBAAEAAUAmJaQAA3AA/v89WAAAAA==';
 
@@ -36,7 +38,7 @@ test('updateIndexMeta met à jour le titre et la description en les échappant',
   const html = updateIndexMeta(indexHtml, { siteTitle: 'A <b> & B', description: 'Desc "x"' });
   assert.match(html, /<title>A &lt;b&gt; &amp; B<\/title>/);
   assert.match(html, /<meta name="description" content="Desc &quot;x&quot;">/);
-  assert.equal(updateIndexMeta(indexHtml, content.meta), indexHtml);
+  assert.equal(updateIndexMeta(indexHtml, liveContent.meta), indexHtml); // index.html synchronisé avec le contenu publié
 });
 
 test('publish : un seul commit avec content.json + image, suppression des seules images inutilisées', async () => {
