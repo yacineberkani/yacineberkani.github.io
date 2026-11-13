@@ -66,3 +66,15 @@ test('projets mis en avant en premier', () => {
   c.projects.items[5].featured = true;
   assert.equal(R.orderProjects(c.projects.items)[0].id, c.projects.items[5].id);
 });
+
+test('aucune section ne laisse passer du HTML, quel que soit le champ empoisonné', () => {
+  const payload = '"><img src=x onerror=alert(1)><script>alert(2)</script>javascript:alert(3)';
+  const poison = (v) => typeof v === 'string' ? payload : Array.isArray(v) ? v.map(poison)
+    : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, poison(x)])) : v;
+  const bad = poison(content);
+  const html = ['renderHeroSocial', 'renderAboutParagraphs', 'renderAboutFacts', 'renderStats', 'renderSkills',
+    'renderTimeline', 'renderEducation', 'renderCertifications', 'renderProjectFilters', 'renderContactMethods', 'renderFooterSocial']
+    .map(fn => R[fn](bad)).join('') + bad.projects.items.map((p, i) => R.renderProjectCard(p, i, { allowDataImage: true })).join('')
+    + R.richText(bad.profile.heroDescription); // sectionTag() est du texte, inséré via textContent
+  assert.ok(!/<img|<script|href="javascript:|src="javascript:/i.test(html), html.slice(0, 300));
+});

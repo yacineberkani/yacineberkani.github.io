@@ -5,7 +5,7 @@
    Le contenu se modifie depuis le back-office (/admin/), pas ici.
    ========================================================================= */
 
-import * as R from './render.js';
+import * as R from './render.js?v=4';
 
 // Clé du brouillon écrit par l'admin (même origine) — lu seulement en mode aperçu.
 const DRAFT_KEY = 'portfolio-admin-draft';
