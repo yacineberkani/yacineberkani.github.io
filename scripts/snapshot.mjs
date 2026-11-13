@@ -21,9 +21,9 @@ for (const [name, opts] of [['desktop', { viewport: { width: 1440, height: 900 }
     if (name === 'desktop' && theme === 'light') {
       const html = await page.evaluate((zones) => zones.map(z => {
         const el = document.querySelector(z);
-        const clone = el.cloneNode(true);
-        clone.querySelectorAll('*').forEach(n => { n.classList.remove('aos-init', 'aos-animate'); if (!n.className) n.removeAttribute('class'); });
-        return '=== ' + z + '\n' + clone.outerHTML.replace(/<!--[\s\S]*?-->/g, '').replace(/\s+/g, ' ').replace(/> </g, '>\n<');
+        const clone = el.cloneNode(true); clone.removeAttribute('id');
+        clone.querySelectorAll('*').forEach(n => { n.classList.remove('aos-init', 'aos-animate'); if (!n.className) n.removeAttribute('class'); n.removeAttribute('id'); if (!n.getAttribute('style')) n.removeAttribute('style'); });
+        return '=== ' + z + '\n' + clone.outerHTML.replace(/<!--[\s\S]*?-->/g, '').replace(/\s+/g, ' ').replace(/> </g, '><').replace(/></g, '>\n<');
       }).join('\n\n'), ZONES);
       writeFileSync(`${out}/dom.html`, html);
       writeFileSync(`${out}/title.txt`, await page.title());

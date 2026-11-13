@@ -1,600 +1,459 @@
 /* =========================================================================
    Portfolio - Yacine Berkani | ML Engineer
-   JavaScript principal : animations, navigation, thème, projets dynamiques
+   JavaScript principal : chargement du contenu (data/content.json),
+   rendu, puis animations, navigation, thème, projets, formulaire.
+   Le contenu se modifie depuis le back-office (/admin/), pas ici.
    ========================================================================= */
 
-(() => {
-    'use strict';
+import * as R from './render.js';
 
-    // =====================================================================
-    // 1. PRELOADER
-    // =====================================================================
-    window.addEventListener('load', () => {
-        const preloader = document.getElementById('preloader');
-        if (preloader) {
-            setTimeout(() => {
-                preloader.classList.add('hidden');
-                document.body.classList.add('is-loaded'); // lance l'animation du logo
-                setTimeout(() => preloader.remove(), 600);
-            }, 500);
-        } else {
-            document.body.classList.add('is-loaded');
-        }
+// Clé du brouillon écrit par l'admin (même origine) — lu seulement en mode aperçu.
+const DRAFT_KEY = 'portfolio-admin-draft';
+const isPreview = new URLSearchParams(location.search).has('preview');
+
+const $ = (sel) => document.querySelector(sel);
+const pageLoaded = document.readyState === 'complete'
+    ? Promise.resolve()
+    : new Promise(resolve => window.addEventListener('load', resolve, { once: true }));
+
+// =====================================================================
+// 1. THEME TOGGLE (dark / light) — immédiat, avant le chargement du contenu
+// =====================================================================
+const themeToggle = document.getElementById('themeToggle');
+const htmlEl = document.documentElement;
+const savedTheme = localStorage.getItem('portfolio-theme');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+function setTheme(theme) {
+    htmlEl.setAttribute('data-theme', theme);
+    localStorage.setItem('portfolio-theme', theme);
+    const icon = themeToggle && themeToggle.querySelector('i');
+    if (icon) icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+}
+setTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        setTheme(htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+}
+
+// =====================================================================
+// 2. CHARGEMENT ET RENDU DU CONTENU
+// =====================================================================
+async function loadContent() {
+    if (isPreview) {
+        try {
+            const draft = JSON.parse(localStorage.getItem(DRAFT_KEY));
+            if (draft && draft.content) return draft.content;
+        } catch { /* brouillon illisible : on affiche la version publiée */ }
+    }
+    // no-cache : revalide auprès de GitHub Pages pour toujours voir la dernière publication.
+    const res = await fetch('data/content.json', { cache: 'no-cache' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+}
+
+function setText(sel, value) {
+    const el = $(sel);
+    if (el) el.textContent = value ?? '';
+}
+function setHtml(sel, html) {
+    const el = $(sel);
+    if (el) el.innerHTML = html;
+}
+
+function applyContent(c) {
+    const fullName = `${c.profile.firstName} ${c.profile.lastName}`;
+
+    // <head>
+    if (c.meta?.siteTitle) document.title = c.meta.siteTitle;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc && c.meta?.description) metaDesc.setAttribute('content', c.meta.description);
+
+    // Hero
+    setText('#heroAvailability', c.profile.availability?.label);
+    setText('#heroName', fullName);
+    setHtml('#heroDescription', R.richText(c.profile.heroDescription));
+    setHtml('#heroSocial', R.renderHeroSocial(c));
+    const photo = $('#profilePhoto');
+    if (photo) {
+        photo.src = R.safeUrl(c.profile.photo?.src, { allowDataImage: isPreview });
+        photo.alt = c.profile.photo?.alt || fullName;
+    }
+    document.querySelectorAll('.profile-badge').forEach((badge, i) => {
+        const b = (c.profile.heroBadges || [])[i];
+        badge.style.display = b ? '' : 'none';
+        if (!b) return;
+        badge.querySelector('i').className = R.safeIcon(b.icon);
+        badge.querySelector('span').textContent = b.label;
     });
 
-    // =====================================================================
-    // 2. AOS INIT (animations au scroll)
-    // =====================================================================
-    if (window.AOS) {
-        AOS.init({
-            duration: 800,
-            easing: 'ease-out-cubic',
-            once: true,
-            offset: 100,
-            disable: 'mobile' ? false : false,
-        });
+    // En-têtes de section + visibilité (section, menu, footer, boutons du hero)
+    const subtitles = {
+        about: c.profile.about?.subtitle, skills: c.skills?.subtitle, experience: c.experience?.subtitle,
+        projects: c.projects?.subtitle, contact: c.contact?.subtitle
+    };
+    for (const key of R.SECTION_ORDER) {
+        const section = document.getElementById(key);
+        if (!section) continue;
+        const visible = R.isVisible(c, key);
+        section.style.display = visible ? '' : 'none';
+        document.querySelectorAll(`.nav-menu a[href="#${key}"], .footer-links a[href="#${key}"]`)
+            .forEach(a => { a.closest('li').style.display = visible ? '' : 'none'; });
+        document.querySelectorAll(`.hero-buttons a[href="#${key}"]`)
+            .forEach(a => { a.style.display = visible ? '' : 'none'; });
+        const header = section.querySelector('.section-header');
+        header.querySelector('.section-tag').textContent = R.sectionTag(c, key);
+        header.querySelector('.section-title').textContent = c.sections[key].title;
+        header.querySelector('.section-subtitle').textContent = subtitles[key] ?? '';
     }
 
-    // =====================================================================
-    // 3. THEME TOGGLE (dark / light)
-    // =====================================================================
-    const themeToggle = document.getElementById('themeToggle');
-    const htmlEl = document.documentElement;
+    // À propos
+    const aboutText = $('#aboutText');
+    if (aboutText) {
+        aboutText.querySelectorAll('.about-paragraph').forEach(p => p.remove());
+        aboutText.insertAdjacentHTML('afterbegin', R.renderAboutParagraphs(c));
+    }
+    setHtml('#aboutInfo', R.renderAboutFacts(c));
+    setHtml('#aboutStats', R.renderStats(c));
 
-    // Initialiser le thème depuis localStorage ou préférence système
-    const savedTheme = localStorage.getItem('portfolio-theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-
-    setTheme(initialTheme);
-
-    function setTheme(theme) {
-        htmlEl.setAttribute('data-theme', theme);
-        localStorage.setItem('portfolio-theme', theme);
-        if (themeToggle) {
-            const icon = themeToggle.querySelector('i');
-            if (icon) {
-                icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-            }
-        }
+    // Compétences, parcours, formations, certifications
+    setHtml('#skillsGrid', R.renderSkills(c));
+    setHtml('#timeline', R.renderTimeline(c));
+    setHtml('#educationGrid', R.renderEducation(c));
+    setHtml('#certGrid', R.renderCertifications(c));
+    for (const [header, grid, items] of [['#educationHeader', '#educationGrid', c.education], ['#certHeader', '#certGrid', c.certifications]]) {
+        const show = Array.isArray(items) && items.length > 0;
+        $(header).style.display = show ? '' : 'none';
+        $(grid).style.display = show ? '' : 'none';
     }
 
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const current = htmlEl.getAttribute('data-theme');
-            setTheme(current === 'dark' ? 'light' : 'dark');
-        });
+    // Projets (filtres ; les cartes sont rendues par renderProjects)
+    setHtml('#projectFilters', R.renderProjectFilters(c));
+
+    // Contact + footer
+    setText('#contactHeading', c.contact.heading);
+    setText('#contactText', c.contact.text);
+    setHtml('#contactMethods', R.renderContactMethods(c));
+    setText('#footerTagline', c.meta?.footerTagline);
+    setHtml('#footerSocial', R.renderFooterSocial(c));
+    setText('#footerName', fullName);
+}
+
+function showPreviewBadge() {
+    const badge = document.createElement('div');
+    badge.textContent = 'Aperçu — brouillon non publié';
+    Object.assign(badge.style, {
+        position: 'fixed', left: '50%', bottom: '16px', transform: 'translateX(-50%)', zIndex: '10000',
+        padding: '8px 14px', borderRadius: '999px', background: '#111827', color: '#fff',
+        font: '600 13px/1.2 Inter, system-ui, sans-serif', boxShadow: '0 6px 24px rgba(0,0,0,.25)', pointerEvents: 'none'
+    });
+    document.body.appendChild(badge);
+}
+
+let content = null;
+try {
+    content = await loadContent();
+    applyContent(content);
+    if (isPreview) showPreviewBadge();
+} catch (err) {
+    console.error('Contenu indisponible :', err);
+    setText('#heroDescription', 'Le contenu est momentanément indisponible. Merci de réessayer dans quelques instants.');
+}
+
+// =====================================================================
+// 3. PRELOADER (masqué une fois la page ET le contenu prêts)
+// =====================================================================
+pageLoaded.then(() => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        setTimeout(() => {
+            preloader.classList.add('hidden');
+            document.body.classList.add('is-loaded'); // lance l'animation du logo
+            setTimeout(() => preloader.remove(), 600);
+        }, 500);
+    } else {
+        document.body.classList.add('is-loaded');
     }
+});
 
-    // =====================================================================
-    // 4. NAVIGATION MOBILE
-    // =====================================================================
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('navMenu');
+// =====================================================================
+// 4. AOS INIT (animations au scroll) — après le rendu
+// =====================================================================
+if (window.AOS) {
+    AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 100, disable: false });
+}
 
-    if (hamburger && navMenu) {
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
+// =====================================================================
+// 5. NAVIGATION MOBILE
+// =====================================================================
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('navMenu');
+
+if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+    navMenu.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
         });
+    });
+}
 
-        // Fermer le menu au clic sur un lien
-        navMenu.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
+// =====================================================================
+// 6. NAVBAR SCROLL EFFECT + LIEN ACTIF
+// =====================================================================
+const navbar = document.getElementById('navbar');
+const scrollProgress = document.getElementById('scrollProgress');
+const backToTop = document.getElementById('backToTop');
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+
+function updateActiveNavLink() {
+    const scrollY = window.pageYOffset + 120;
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + sectionId) link.classList.add('active');
             });
-        });
-    }
-
-    // =====================================================================
-    // 5. NAVBAR SCROLL EFFECT
-    // =====================================================================
-    const navbar = document.getElementById('navbar');
-    const scrollProgress = document.getElementById('scrollProgress');
-    const backToTop = document.getElementById('backToTop');
-
-    function onScroll() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = (scrollTop / docHeight) * 100;
-
-        // Navbar background au scroll
-        if (navbar) {
-            navbar.classList.toggle('scrolled', scrollTop > 30);
         }
+    });
+}
 
-        // Scroll progress bar
-        if (scrollProgress) {
-            scrollProgress.style.width = progress + '%';
+function onScroll() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    if (navbar) navbar.classList.toggle('scrolled', scrollTop > 30);
+    if (scrollProgress) scrollProgress.style.width = progress + '%';
+    if (backToTop) backToTop.classList.toggle('visible', scrollTop > 400);
+    updateActiveNavLink();
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+
+// =====================================================================
+// 7. BACK TO TOP
+// =====================================================================
+if (backToTop) {
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
+
+// =====================================================================
+// 8. TYPING EFFECT (Hero)
+// =====================================================================
+const typedText = document.getElementById('typedText');
+const phrases = (content?.profile?.typedPhrases || []).filter(Boolean);
+
+if (typedText && phrases.length) {
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    const typeEffect = () => {
+        const current = phrases[phraseIndex];
+        if (isDeleting) {
+            typedText.textContent = current.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typedText.textContent = current.substring(0, charIndex + 1);
+            charIndex++;
         }
-
-        // Back to top
-        if (backToTop) {
-            backToTop.classList.toggle('visible', scrollTop > 400);
+        let typeSpeed = isDeleting ? 50 : 100;
+        if (!isDeleting && charIndex === current.length) {
+            typeSpeed = 2000;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            typeSpeed = 500;
         }
+        setTimeout(typeEffect, typeSpeed);
+    };
+    typeEffect();
+}
 
-        // Active nav link
-        updateActiveNavLink();
-    }
+// =====================================================================
+// 9. ANIMATION DES COMPTEURS (stats)
+// =====================================================================
+const counters = document.querySelectorAll('.stat-number');
+let countersAnimated = false;
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    // =====================================================================
-    // 6. ACTIVE NAV LINK AU SCROLL
-    // =====================================================================
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    function updateActiveNavLink() {
-        const scrollY = window.pageYOffset + 120;
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const sectionId = section.getAttribute('id');
-
-            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === '#' + sectionId) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        });
-    }
-
-    // =====================================================================
-    // 7. BACK TO TOP
-    // =====================================================================
-    if (backToTop) {
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    }
-
-    // =====================================================================
-    // 8. TYPING EFFECT (Hero)
-    // =====================================================================
-    const typedText = document.getElementById('typedText');
-    const phrases = [
-        'ML Engineer',
-        'MLOps Specialist',
-        'LLM & RAG Expert',
-        'Cloud Architect GCP',
-        'Data Engineer'
-    ];
-
-    if (typedText) {
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-
-        function typeEffect() {
-            const current = phrases[phraseIndex];
-
-            if (isDeleting) {
-                typedText.textContent = current.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typedText.textContent = current.substring(0, charIndex + 1);
-                charIndex++;
-            }
-
-            let typeSpeed = isDeleting ? 50 : 100;
-
-            if (!isDeleting && charIndex === current.length) {
-                typeSpeed = 2000;
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                phraseIndex = (phraseIndex + 1) % phrases.length;
-                typeSpeed = 500;
-            }
-
-            setTimeout(typeEffect, typeSpeed);
+function animateCounter(el, target) {
+    if (!target) { el.textContent = 0; return; }
+    let current = 0;
+    const step = Math.max(1, Math.ceil(target / 50));
+    const interval = 1500 / (target / step);
+    const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+            current = target;
+            clearInterval(timer);
         }
+        el.textContent = current;
+    }, interval);
+}
 
-        typeEffect();
-    }
-
-    // =====================================================================
-    // 9. ANIMATION DES COMPTEURS (stats)
-    // =====================================================================
-    const counters = document.querySelectorAll('.stat-number');
-    let countersAnimated = false;
-
+if (counters.length > 0) {
     const counterObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting && !countersAnimated) {
                 countersAnimated = true;
-                counters.forEach(counter => {
-                    const target = parseInt(counter.getAttribute('data-target'));
-                    animateCounter(counter, target);
-                });
+                counters.forEach(counter => animateCounter(counter, parseInt(counter.getAttribute('data-target'), 10)));
             }
         });
     }, { threshold: 0.3 });
+    counterObserver.observe(counters[0].closest('.about-stats') || counters[0]);
+}
 
-    if (counters.length > 0) {
-        counterObserver.observe(counters[0].closest('.about-stats') || counters[0]);
-    }
+// =====================================================================
+// 10. PROJETS + FILTRES
+// =====================================================================
+const projectsGrid = document.getElementById('projectsGrid');
+const projects = R.orderProjects(content?.projects?.items);
 
-    function animateCounter(el, target) {
-        let current = 0;
-        const step = Math.max(1, Math.ceil(target / 50));
-        const duration = 1500;
-        const interval = duration / (target / step);
+function renderProjects(filter = 'all') {
+    if (!projectsGrid) return;
+    const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+    projectsGrid.innerHTML = filtered
+        .map((project, idx) => R.renderProjectCard(project, idx, { allowDataImage: isPreview }))
+        .join('');
+}
+renderProjects();
 
-        const timer = setInterval(() => {
-            current += step;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
-            }
-            el.textContent = current;
-        }, interval);
-    }
+const filterButtons = document.querySelectorAll('.filter-btn');
+filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderProjects(btn.getAttribute('data-filter'));
+    });
+});
 
-    // =====================================================================
-    // 10. DONNÉES DES PROJETS (GitHub)
-    // =====================================================================
-    const projects = [
-        {
-            title: 'Agent FinOps GCP',
-            description: 'Assistant IA pour l\'optimisation des coûts GCP — interrogation en langage naturel des données BigQuery, analyse par service, inventaire des ressources et actualités GCP en temps réel. Interface CLI + UI web.',
-            category: 'llm',
-            categoryLabel: 'AI Agent / GCP',
-            icon: 'fa-coins',
-            tags: ['Python', 'GCP', 'BigQuery', 'Gemini', 'FinOps', 'React'],
-            date: 'Juin 2026',
-            videoUrl: 'https://github.com/user-attachments/assets/de3229a1-7509-4896-b849-e8b04221a4a1',
-            poc: true
-        },
-        {
-            title: 'Flight Search Agent',
-            description: 'Agent IA autonome de recherche de vols en temps réel. Exploite des outils LLM pour interroger des API, comparer les offres et présenter les résultats en langage naturel.',
-            category: 'llm',
-            categoryLabel: 'AI Agent',
-            icon: 'fa-plane',
-            tags: ['Python', 'LLM', 'AI Agent', 'API', 'Streamlit'],
-            date: 'Juin 2026',
-            link: 'https://github.com/yacineberkani/Flight-Search-Agent',
-            videoUrl: 'https://github.com/user-attachments/assets/d5561a82-e9de-412d-a601-ed4e1be758f7'
-        },
+// =====================================================================
+// 11. FORMULAIRE DE CONTACT
+// =====================================================================
+// URL du Worker Cloudflare qui envoie l'email via Resend (voir contact-worker/).
+// La clé API Resend reste côté serveur : elle ne doit JAMAIS apparaître ici.
+const CONTACT_ENDPOINT = 'https://contact-form.yacineberkani32.workers.dev';
+const contactEmail = content?.contact?.email || 'yacineberkani32@gmail.com';
 
-        {
-            title: 'CV Evaluator',
-            description: 'Évaluateur automatique de CV propulsé par LLM — analyse, scoring et recommandations personnalisées pour optimiser les candidatures et aider les recruteurs.',
-            category: 'llm',
-            categoryLabel: 'AI Agent (multi-agent)',
-            icon: 'fa-file-pen',
-            tags: ['Python', 'LLM', 'NLP', 'Streamlit', 'RAG'],
-            date: 'Juin 2026',
-            link: 'https://github.com/yacineberkani/cv_evaluator',
-            videoUrl: 'https://github.com/user-attachments/assets/45300066-c809-473d-ba67-3bd57212b555'
-        },
-       
-        {
-            title: 'Fatigue Driving Detection',
-            description: 'Détection en temps réel de la fatigue du conducteur par Computer Vision — analyse du comportement des yeux et du visage via caméra pour alerter en cas de somnolence.',
-            category: 'ml',
-            categoryLabel: 'Computer Vision',
-            icon: 'fa-car',
-            tags: ['Python', 'OpenCV', 'Deep Learning', 'Real-time', 'dlib'],
-            date: 'Juin 2026',
-            link: 'https://github.com/yacineberkani/yacineberkani-Fatigue-Driving-Detection'
-        },
-        {
-            title: 'RAG Multi-Documents',
-            description: 'Projet destiné aux utilisateurs souhaitant extraire et analyser des informations de plusieurs fichiers PDF via une architecture RAG avec LLM.',
-            category: 'llm',
-            categoryLabel: 'LLM / RAG',
-            icon: 'fa-file-lines',
-            tags: ['Python', 'LLM', 'RAG', 'PDF'],
-            date: 'Mai 2024',
-            link: 'https://github.com/yacineberkani/Rag_multidoc',
-            featured: true
-        },
-        {
-            title: 'Update Scraper Project',
-            description: "Modèle NLP capable de comprendre l'intention de l'utilisateur et d'identifier les sources d'articles via topic modelling et scraping intelligent.",
-            category: 'ml',
-            categoryLabel: 'NLP',
-            icon: 'fa-magnifying-glass',
-            tags: ['Python', 'NLP', 'Topic Modeling', 'Scraping'],
-            date: 'Mars 2026',
-            link: 'https://github.com/yacineberkani/Update_Scraper_Project'
-        },
-        {
-            title: 'Détection de Tumeurs Cérébrales',
-            description: "Classification d'images médicales (IRM) pour la détection de tumeurs cérébrales avec un modèle CNN VGG16 sous TensorFlow/Keras. 91% d'accuracy.",
-            category: 'ml',
-            categoryLabel: 'Computer Vision',
-            icon: 'fa-brain',
-            tags: ['Python', 'TensorFlow', 'CNN', 'VGG16'],
-            date: 'Mai 2024',
-            link: 'https://github.com/yacineberkani/Detection_de_Tumeurs',
-            featured: true
-        },
-        {
-            title: 'Projet Index - Recherche documentaire',
-            description: "Système d'indexation et de recherche pour stocker, indexer et rechercher efficacement des informations dans un corpus de documents textuels.",
-            category: 'ml',
-            categoryLabel: 'IR / NLP',
-            icon: 'fa-list-ol',
-            tags: ['Python', 'Indexation', 'NLP'],
-            date: 'Mars 2026',
-            link: 'https://github.com/yacineberkani/projetINDEX'
-        },
-        {
-            title: 'Scraper ArXiv',
-            description: 'Outil de téléchargement automatique d\'articles scientifiques depuis la plateforme arXiv en fonction de requêtes utilisateur.',
-            category: 'data',
-            categoryLabel: 'Data Engineering',
-            icon: 'fa-download',
-            tags: ['Python', 'Scraping', 'arXiv'],
-            date: 'Mai 2024',
-            link: 'https://github.com/yacineberkani/scraping-ArXiv'
-        },
-        {
-            title: 'Scientific Article Scraper',
-            description: "Récupération d'articles scientifiques en PDF à partir d'un prompt en langage naturel. Pipeline NLP complet.",
-            category: 'llm',
-            categoryLabel: 'LLM / NLP',
-            icon: 'fa-robot',
-            tags: ['Python', 'NLP', 'LLM', 'PDF'],
-            date: 'Mai 2024',
-            link: 'https://github.com/yacineberkani/Scraper_Project'
-        },
-        {
-            title: 'Big Data Hadoop on GCP',
-            description: 'Projet Big Data avec Hadoop et Hive déployé sur Google Cloud Platform. Pipeline de traitement de données à grande échelle.',
-            category: 'data',
-            categoryLabel: 'Big Data',
-            icon: 'fa-database',
-            tags: ['Hadoop', 'Hive', 'GCP', 'Big Data'],
-            date: 'Nov 2024',
-            link: 'https://github.com/yacineberkani/projet-Big-data-Hadoop',
-            featured: true
-        },
-        {
-            title: 'GEN AI',
-            description: "Projet d'exploration des architectures d'IA générative et prompt engineering sur différents modèles LLM.",
-            category: 'llm',
-            categoryLabel: 'Generative AI',
-            icon: 'fa-wand-magic-sparkles',
-            tags: ['LLM', 'GenAI', 'Prompt Engineering'],
-            date: 'Jan 2025',
-            link: 'https://github.com/yacineberkani/GEN_AI'
-        },
-        {
-            title: 'Transfer Learning - Classification de Tweets',
-            description: 'Classification de tweets basée sur le transfer learning avec des modèles pré-entraînés.',
-            category: 'ml',
-            categoryLabel: 'NLP',
-            icon: 'fa-comment-dots',
-            tags: ['Transfer Learning', 'NLP', 'Classification'],
-            date: 'Avril 2024',
-            link: 'https://github.com/yacineberkani/transfert-_learning'
-        },
-        {
-            title: 'Chiffrement',
-            description: "Projet d'implémentation d'algorithmes de cryptographie et chiffrement. Exploration de différentes techniques de sécurité.",
-            category: 'ml',
-            categoryLabel: 'Security',
-            icon: 'fa-lock',
-            tags: ['Python', 'Cryptography', 'Security'],
-            date: 'Déc 2024',
-            link: 'https://github.com/yacineberkani/Chiffrement'
-        },
-        {
-            title: 'Formulaire de Connexion',
-            description: "Système d'authentification permettant aux utilisateurs de s'inscrire et se connecter via email unique avec mot de passe sécurisé.",
-            category: 'web',
-            categoryLabel: 'Web Dev',
-            icon: 'fa-user-lock',
-            tags: ['Web', 'Auth', 'Backend'],
-            date: 'Mai 2024',
-            link: 'https://github.com/yacineberkani/Formulaire_de_Connexion'
+const contactForm = document.getElementById('contactForm');
+const formStatus = document.getElementById('formStatus');
+
+function showFormStatus(message, type) {
+    if (!formStatus) return;
+    formStatus.textContent = message;
+    formStatus.className = 'form-status ' + type;
+    formStatus.style.display = 'block';
+}
+
+if (contactForm) {
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const submitLabel = submitBtn ? submitBtn.querySelector('span') : null;
+    const defaultLabel = submitLabel ? submitLabel.textContent : '';
+
+    // Compteur de caractères du message
+    const messageInput = document.getElementById('message');
+    const messageCounter = document.getElementById('messageCounter');
+    const updateCounter = () => {
+        if (messageInput && messageCounter) {
+            messageCounter.textContent = messageInput.value.length + ' / ' + messageInput.maxLength;
         }
-    ];
+    };
+    if (messageInput) messageInput.addEventListener('input', updateCounter);
+    contactForm.addEventListener('reset', () => setTimeout(updateCounter, 0));
 
-    // =====================================================================
-    // 11. RENDERING DES PROJETS
-    // =====================================================================
-    const projectsGrid = document.getElementById('projectsGrid');
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    function createProjectCard(project, idx) {
-        return `
-            <article class="project-card" data-category="${project.category}" style="animation-delay: ${idx * 0.08}s">
-                ${project.videoUrl ? `<div class="project-video-wrapper"><video controls preload="metadata" muted playsinline><source src="${project.videoUrl}" type="video/mp4"></video></div>` : ''}
-                <div class="project-icon">
-                    <i class="fas ${project.icon}"></i>
-                </div>
-                <div class="project-header">
-                    <h3 class="project-title">${project.title}</h3>
-                    <span class="project-category">${project.categoryLabel}</span>
-                </div>
-                <p class="project-description">${project.description}</p>
-                <div class="project-tags">
-                    ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
-                </div>
-                <div class="project-footer">
-                    <span class="project-date"><i class="far fa-calendar"></i> ${project.date}</span>
-                    ${project.link
-                        ? `<a href="${project.link}" target="_blank" rel="noopener" class="project-link"><span>Voir le code</span><i class="fab fa-github"></i></a>`
-                        : `<span class="project-poc-badge"><i class="fas fa-lock"></i> POC Interne</span>`
-                    }
-                </div>
-            </article>
-        `;
-    }
-
-    function renderProjects(filter = 'all') {
-        if (!projectsGrid) return;
-
-        const filtered = filter === 'all'
-            ? projects
-            : projects.filter(p => p.category === filter);
-
-        projectsGrid.innerHTML = filtered.map((project, idx) => createProjectCard(project, idx)).join('');
-    }
-
-    renderProjects();
-
-    // =====================================================================
-    // 12. FILTRES PROJETS
-    // =====================================================================
-    const filterButtons = document.querySelectorAll('.filter-btn');
-
-    filterButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            filterButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const filter = btn.getAttribute('data-filter');
-            renderProjects(filter);
-        });
-    });
-
-    // =====================================================================
-    // 13. FORMULAIRE DE CONTACT
-    // =====================================================================
-    // URL du Worker Cloudflare qui envoie l'email via Resend (voir contact-worker/).
-    // La clé API Resend reste côté serveur : elle ne doit JAMAIS apparaître ici.
-    const CONTACT_ENDPOINT = 'https://contact-form.yacineberkani32.workers.dev';
-
-    const contactForm = document.getElementById('contactForm');
-    const formStatus = document.getElementById('formStatus');
-
-    if (contactForm) {
-        const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const submitLabel = submitBtn ? submitBtn.querySelector('span') : null;
-        const defaultLabel = submitLabel ? submitLabel.textContent : '';
-
-        // Compteur de caractères du message
-        const messageInput = document.getElementById('message');
-        const messageCounter = document.getElementById('messageCounter');
-        const updateCounter = () => {
-            if (messageInput && messageCounter) {
-                messageCounter.textContent = messageInput.value.length + ' / ' + messageInput.maxLength;
-            }
+        const formData = new FormData(contactForm);
+        const data = {
+            firstName: (formData.get('firstName') || '').trim(),
+            lastName: (formData.get('lastName') || '').trim(),
+            email: (formData.get('email') || '').trim(),
+            company: (formData.get('company') || '').trim(),
+            sector: formData.get('sector') || '',
+            subject: formData.get('subject') || '',
+            message: (formData.get('message') || '').trim(),
+            website: formData.get('website') || '' // honeypot
         };
-        if (messageInput) messageInput.addEventListener('input', updateCounter);
-        contactForm.addEventListener('reset', () => setTimeout(updateCounter, 0));
 
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        if (!data.firstName || !data.lastName || !data.email || !data.sector || !data.subject || !data.message) {
+            showFormStatus('Merci de vous présenter : prénom, nom, email, secteur d\'activité, sujet et message sont obligatoires.', 'error');
+            return;
+        }
+        if (!formData.get('consent')) {
+            showFormStatus('Merci d\'accepter l\'utilisation de vos informations pour que je puisse vous répondre.', 'error');
+            return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+            showFormStatus('Veuillez saisir une adresse email valide.', 'error');
+            return;
+        }
+        if (data.message.length < 10) {
+            showFormStatus('Votre message est un peu court (10 caractères minimum).', 'error');
+            return;
+        }
 
-            const formData = new FormData(contactForm);
-            const data = {
-                firstName: (formData.get('firstName') || '').trim(),
-                lastName: (formData.get('lastName') || '').trim(),
-                email: (formData.get('email') || '').trim(),
-                company: (formData.get('company') || '').trim(),
-                sector: formData.get('sector') || '',
-                subject: formData.get('subject') || '',
-                message: (formData.get('message') || '').trim(),
-                website: formData.get('website') || '' // honeypot
-            };
+        if (submitBtn) submitBtn.disabled = true;
+        if (submitLabel) submitLabel.textContent = 'Envoi en cours...';
 
-            // Validation : tous les champs sont obligatoires
-            if (!data.firstName || !data.lastName || !data.email || !data.sector || !data.subject || !data.message) {
-                showFormStatus('Merci de vous présenter : prénom, nom, email, secteur d\'activité, sujet et message sont obligatoires.', 'error');
-                return;
-            }
-            if (!formData.get('consent')) {
-                showFormStatus('Merci d\'accepter l\'utilisation de vos informations pour que je puisse vous répondre.', 'error');
-                return;
-            }
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-                showFormStatus('Veuillez saisir une adresse email valide.', 'error');
-                return;
-            }
-            if (data.message.length < 10) {
-                showFormStatus('Votre message est un peu court (10 caractères minimum).', 'error');
-                return;
-            }
+        try {
+            const res = await fetch(CONTACT_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(result.error || 'Erreur lors de l\'envoi.');
 
-            if (submitBtn) submitBtn.disabled = true;
-            if (submitLabel) submitLabel.textContent = 'Envoi en cours...';
-
-            try {
-                const res = await fetch(CONTACT_ENDPOINT, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                const result = await res.json().catch(() => ({}));
-
-                if (!res.ok) {
-                    throw new Error(result.error || 'Erreur lors de l\'envoi.');
-                }
-
-                showFormStatus('Merci ' + data.firstName + ' ! Votre message a bien été envoyé, je vous réponds rapidement.', 'success');
-                contactForm.reset();
-                setTimeout(() => {
-                    formStatus.style.display = 'none';
-                    formStatus.classList.remove('success', 'error');
-                }, 6000);
-            } catch (err) {
-                const msg = (err instanceof TypeError || !err || !err.message)
-                    ? 'Impossible de contacter le serveur.'
-                    : err.message;
-                showFormStatus(msg +
-                    ' Vous pouvez aussi m\'écrire directement à yacineberkani32@gmail.com.', 'error');
-            } finally {
-                if (submitBtn) submitBtn.disabled = false;
-                if (submitLabel) submitLabel.textContent = defaultLabel;
-            }
-        });
-    }
-
-    function showFormStatus(message, type) {
-        if (!formStatus) return;
-        formStatus.textContent = message;
-        formStatus.className = 'form-status ' + type;
-        formStatus.style.display = 'block';
-    }
-
-
-    // =====================================================================
-    // 15. SMOOTH SCROLL POUR LES ANCRES
-    // =====================================================================
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-            if (href === '#' || href === '') return;
-
-            const target = document.querySelector(href);
-            if (target) {
-                e.preventDefault();
-                const offsetTop = target.getBoundingClientRect().top + window.pageYOffset - 70;
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
-            }
-        });
+            showFormStatus('Merci ' + data.firstName + ' ! Votre message a bien été envoyé, je vous réponds rapidement.', 'success');
+            contactForm.reset();
+            setTimeout(() => {
+                formStatus.style.display = 'none';
+                formStatus.classList.remove('success', 'error');
+            }, 6000);
+        } catch (err) {
+            const msg = (err instanceof TypeError || !err || !err.message)
+                ? 'Impossible de contacter le serveur.'
+                : err.message;
+            showFormStatus(msg + ' Vous pouvez aussi m\'écrire directement à ' + contactEmail + '.', 'error');
+        } finally {
+            if (submitBtn) submitBtn.disabled = false;
+            if (submitLabel) submitLabel.textContent = defaultLabel;
+        }
     });
+}
 
-    // =====================================================================
-    // 16. FOOTER YEAR
-    // =====================================================================
-    const yearEl = document.getElementById('currentYear');
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
+// =====================================================================
+// 12. SMOOTH SCROLL POUR LES ANCRES
+// =====================================================================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href === '#' || href === '') return;
+        const target = document.querySelector(href);
+        if (target) {
+            e.preventDefault();
+            const offsetTop = target.getBoundingClientRect().top + window.pageYOffset - 70;
+            window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+        }
+    });
+});
 
-    // =====================================================================
-    // 17. CONSOLE EASTER EGG
-    // =====================================================================
-    console.log(
-        '%c👋 Salut ! Tu es curieux(se) ?',
-        'color: #6366f1; font-size: 20px; font-weight: bold;'
-    );
-    console.log(
-        '%cJe suis Yacine Berkani, ML Engineer 🤖\nContact: yacineberkani32@gmail.com',
-        'color: #8b5cf6; font-size: 14px;'
-    );
+// =====================================================================
+// 13. FOOTER YEAR + CONSOLE EASTER EGG
+// =====================================================================
+const yearEl = document.getElementById('currentYear');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-})();
+console.log('%c👋 Salut ! Tu es curieux(se) ?', 'color: #6366f1; font-size: 20px; font-weight: bold;');
+console.log(`%cJe suis ${content ? content.profile.firstName + ' ' + content.profile.lastName : 'Yacine Berkani'}, ML Engineer 🤖\nContact: ${contactEmail}`,
+    'color: #8b5cf6; font-size: 14px;');

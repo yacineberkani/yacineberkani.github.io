@@ -109,8 +109,9 @@ export function statValue(content, stat) {
 
 export function renderStats(content) {
     return list(content?.stats).map(s =>
-        `<div class="stat-card"><div class="stat-number" data-target="${statValue(content, s)}">0</div>` +
-        `<div class="stat-plus">${escapeHtml(s.suffix)}</div><div class="stat-label">${escapeHtml(s.label)}</div></div>`
+        // Les espaces entre les blocs comptent ici (éléments en ligne) : ils reproduisent l'écart d'origine.
+        `<div class="stat-card">\n<div class="stat-number" data-target="${statValue(content, s)}">0</div>\n` +
+        `<div class="stat-plus">${escapeHtml(s.suffix)}</div>\n<div class="stat-label">${escapeHtml(s.label)}</div>\n</div>`
     ).join('');
 }
 
