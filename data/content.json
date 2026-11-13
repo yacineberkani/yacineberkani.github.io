@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-13T19:19:55.945Z",
+  "updatedAt": "2026-11-13T19:23:25.288Z",
   "meta": {
     "siteTitle": "Yacine Berkani | ML Engineer",
     "description": "Portfolio de Yacine Berkani - ML Engineer spécialisé en MLOps, LLM, RAG et GCP",
@@ -99,7 +99,7 @@
       "label": "Années D'Expérience",
       "value": 17,
       "suffix": "+",
-      "source": "years",
+      "source": "",
       "id": "stat-annees-d-experience"
     },
     {
