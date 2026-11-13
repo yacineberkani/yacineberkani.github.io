@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import * as R from '../js/render.js';
 
-const content = JSON.parse(readFileSync(new URL('../data/content.json', import.meta.url), 'utf8'));
+// Jeu de données figé : les tests ne dépendent pas du contenu réel, que l'admin modifie.
+const content = JSON.parse(readFileSync(new URL('./fixtures/content.sample.json', import.meta.url), 'utf8'));
+const liveContent = JSON.parse(readFileSync(new URL('../data/content.json', import.meta.url), 'utf8'));
 
 test('escapeHtml neutralise le HTML', () => {
   assert.equal(R.escapeHtml('<script>"x"&\'y\''), '&lt;script&gt;&quot;x&quot;&amp;&#39;y&#39;');
