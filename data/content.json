@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-13T19:36:03.693Z",
+  "updatedAt": "2026-11-13T19:38:48.604Z",
   "meta": {
     "siteTitle": "Yacine Berkani | ML Engineer",
     "description": "Portfolio de Yacine Berkani - ML Engineer spécialisé en MLOps, LLM, RAG et GCP",
@@ -96,10 +96,10 @@
   },
   "stats": [
     {
-      "label": "Années D'Expérience",
-      "value": 17,
+      "label": "Expérience",
+      "value": 5,
       "suffix": "+",
-      "source": "",
+      "source": "years",
       "id": "stat-annees-d-experience"
     },
     {
@@ -296,6 +296,31 @@
             "name": "MySQL"
           }
         ]
+      },
+      {
+        "name": "cloudera",
+        "icon": "fas fa-code",
+        "items": [
+          {
+            "name": "hadoop"
+          },
+          {
+            "name": "yarn"
+          },
+          {
+            "name": "hdfs"
+          },
+          {
+            "name": "spark"
+          },
+          {
+            "name": "cdp"
+          },
+          {
+            "name": "mapreduce"
+          }
+        ],
+        "id": "cloudera"
       }
     ]
   },
