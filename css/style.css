@@ -1477,7 +1477,8 @@ button {
     border: 1px solid var(--border-color);
 }
 
-.project-video-wrapper video {
+.project-video-wrapper video,
+.project-video-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
