@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-18T21:18:41.417Z",
+  "updatedAt": "2026-11-18T21:23:09.940Z",
   "meta": {
     "siteTitle": "Yacine Berkani | ML Engineer",
     "description": "Portfolio de Yacine Berkani - ML Engineer spécialisé en MLOps, LLM, RAG et GCP",
@@ -9,10 +9,10 @@
   "profile": {
     "firstName": "Yacine",
     "lastName": "Berkani",
-    "title": "ML Engineer",
+    "title": "AI Engineer",
     "photo": {
       "src": "assets/images/Media.jpg",
-      "alt": "Yacine Berkani - ML Engineer"
+      "alt": "Yacine Berkani - AI Engineer"
     },
     "availability": {
       "status": "open",
@@ -20,6 +20,8 @@
     },
     "yearsOfExperience": 5,
     "typedPhrases": [
+      "AI Engineer",
+      "LLMOps",
       "ML Engineer",
       "MLOps Specialist",
       "LLM & RAG Expert",
