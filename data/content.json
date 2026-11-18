@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-18T21:04:08.321Z",
+  "updatedAt": "2026-11-18T21:18:41.417Z",
   "meta": {
     "siteTitle": "Yacine Berkani | ML Engineer",
     "description": "Portfolio de Yacine Berkani - ML Engineer spécialisé en MLOps, LLM, RAG et GCP",
@@ -29,20 +29,20 @@
     "heroDescription": "Ingénieur Machine Learning spécialisé dans la conception et l'industrialisation de solutions IA en production. Spécialisé en **LLM, RAG, MLOps** et architectures cloud **GCP**. Je transforme des modèles en services robustes, scalables et réellement utilisés.",
     "heroBadges": [
       {
-        "icon": "fas fa-brain",
-        "label": "ML"
+        "label": "AI",
+        "icon": "fas fa-brain"
       },
       {
-        "icon": "fas fa-cloud",
-        "label": "GCP"
+        "label": "GCP",
+        "icon": "fas fa-cloud"
       },
       {
-        "icon": "fas fa-code",
-        "label": "Python"
+        "label": "Python",
+        "icon": "fas fa-code"
       },
       {
-        "icon": "fas fa-robot",
-        "label": "LLM"
+        "label": "LLM",
+        "icon": "fas fa-robot"
       }
     ],
     "about": {
