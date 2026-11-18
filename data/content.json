@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-18T21:01:01.141Z",
+  "updatedAt": "2026-11-18T21:04:08.321Z",
   "meta": {
     "siteTitle": "Yacine Berkani | ML Engineer",
     "description": "Portfolio de Yacine Berkani - ML Engineer spécialisé en MLOps, LLM, RAG et GCP",
@@ -475,7 +475,7 @@
         ],
         "date": "Octobre 2026",
         "image": "",
-        "videoUrl": "https://github.com/yacineberkani/datalyn-code-v1/issues/1#issue-6476462122",
+        "videoUrl": "https://github-production-user-asset-6210df.s3.amazonaws.com/159167247/711198048-277f6759-c1a4-4173-af3f-eb69c9a4acb1.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20261118%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261118T210317Z&X-Amz-Expires=300&X-Amz-Signature=39155d93fb49cd25c21c0e0af1314fa04705fc6a7e8078ff8c3f21fbfb9747fb&X-Amz-SignedHeaders=host&response-content-type=video%2Fmp4",
         "links": {
           "github": "",
           "demo": "https://marketplace.visualstudio.com/items?itemName=Datalyn-code.datalyn-code-agent",
